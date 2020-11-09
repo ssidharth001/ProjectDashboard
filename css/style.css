@@ -443,6 +443,7 @@ a {text-decoration: none;}
 .project-headings--details,
 .project-headings--resources,
 .project-headings--invoice,
+.project-headings--dailystatus,
 .project-headings--edit {
     background-color: var(--secondary-color);
     border-top: 1px solid  var(--secondary-color);
@@ -459,7 +460,9 @@ a {text-decoration: none;}
 
 .project-headings--details,
 .project-headings--resources,
-.project-headings--invoice {flex: 1;}
+.project-headings--invoice,
+.project-headings--dailystatus
+ {flex: 1;}
 
 .project-headings--details {border-bottom: 4px solid var(--font-color);}
 .project-headings--edit{margin-right: 0;}
