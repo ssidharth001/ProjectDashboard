@@ -39,12 +39,23 @@ const statusResourceOptions = document.querySelector('#resource-list')
 for(const list of uniqueResources){
     statusResourceOptions.innerHTML += `<option>${list}</option>`
 }
-
+let Statusobj = []
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedDateOptn = statusDateOptions.options[statusDateOptions.selectedIndex].value;
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
     const selectedActivityOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
     const selectedHourOptn = statusHourOptions.options[statusResourceOptions.selectedIndex].value
 
-    console.log(selectedActivityOptn, selectedDateOptn, selectedResourceOptn, selectedHourOptn)
+    let dailyStatusDetail = {
+        projectName: 'xyz',
+        date: selectedDateOptn,
+        resourceName: selectedResourceOptn,
+        activityType: selectedActivityOptn,
+        workHours: selectedHourOptn
+    }
+    Statusobj.push(dailyStatusDetail)
+    console.log(dailyStatusDetail)
 })
+
+
+
