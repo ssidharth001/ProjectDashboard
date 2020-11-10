@@ -27,6 +27,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/tagify/3.20.3/tagify.min.js" integrity="sha512-Ok8DfwnjQhVsq3+9ToFXJjkWPL2h99aJWCg4U8w7iWA6i3kf4zgNLd7cLBdWdCqGZArRevXQAr8FGbucnZqrvw==" crossorigin="anonymous"></script>
     <script defer src="scripts/utility.js"></script>
     <script defer src="scripts/projectDetails.js"></script>
+    <script defer src="scripts/status.js"></script>
     <script defer src="scripts/formValidations.js"></script>
     <script defer src="scripts/project.js"></script>
     <script defer src="scripts/resource.js"></script>
@@ -345,11 +346,45 @@
                     
                     <!-- Daily status Tab starts -->
                     <div class="status" id="status">
-                        <div class="status-content display-flex-column-align">
-                            <div>
-                            
+                        <div>
+                            <div class="status-date">
+                                <form>
+                                    <label for="work-date">Date:</label>
+                                    <select id="work-date" name="workDate">
+                                        <!--date options-->
+                                    </select>
+                                </form>
                             </div>
-
+                            <div class="status-fields">
+                                <div class="resource-field">
+                                    <form>
+                                        <label for="resource-list">Resource Name:</label>
+                                        <select id="resource-list" name="resourceList">
+                                             <!--resource options-->
+                                        </select>
+                                    </form>
+                                </div>
+                                    <div class="activity-field">
+                                        <form>
+                                            <label for="activity-type">Activity Type:</label>
+                                            <select id="activity-type" name="activityType">
+                                                 <!--activity options-->
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="working-hours-field">
+                                        <form>
+                                            <label for="working-hours">Working Hours:</label>
+                                            <select id="working-hours" name="workingHours">
+                                                 <!--hour options-->
+                                            </select>
+                                        </form>
+                                    </div>
+                            </div>
+                            <div>
+                                <input type="submit" class="status-submit-btn">
+                            </div>
+                            
                         </div>
                     </div>
                     
