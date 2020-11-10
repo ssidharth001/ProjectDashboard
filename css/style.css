@@ -438,7 +438,7 @@ a {text-decoration: none;}
     align-self: center;
 }
 
-.project-details {margin: 0 45px;}
+/* .project-details {margin: 0 45px;} */
 .project-headings { justify-content: space-between;}
 .project-headings--details,
 .project-headings--resources,
@@ -612,6 +612,83 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 .margin-right10 {margin: 0 10px 0 0;}
 .display-on-invoice-generate {display: none;}
 
+/* -----------------------DAILY STATUS--------------------------------  */
+.status-history-drawer {
+    display: flex;
+    /* width: 100%; */
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s; 
+    position: fixed;
+    bottom: 0;
+    margin-bottom: -100px;
+    transition: all 0.5s;
+}
+.drawer-handle {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(14, 20, 24);
+    color: var(--font-color);
+    cursor: pointer;
+    margin-top: -30px;
+}
+.status-container {
+    flex:1;
+    background-color: rgb(14, 20, 24);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -3px;
+    /* height: 350px; */
+    overflow: scroll;
+}
+
+.status-card {
+    flex-basis: 46%;
+    margin: auto;
+    margin-top: 25px;
+    height: 150px;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+}
+.dates-section {
+    background-color: var(--font-color);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 10px;
+    height: 10%;
+    text-align: center;
+}
+
+
+.date {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.details-section {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    height: 55%;
+    align-items: center;
+    padding-top: 20px;
+}
+.details-content {
+    display: flex;
+    margin-bottom: 10px;
+}
+.details-content p {
+    font-weight: bold;
+}
+
+.details {
+    padding-right: 25px;
+    padding-left: 5px;
+    font-weight: normal;
+}
 
 /* 5.4. RESOURCES SECTION */
 
@@ -666,6 +743,7 @@ option {
 .................................................*/
 
 .footer {
+    z-index: 1;
     background-color: var(--primary-color);
     height: 50px;
     width: 100%;
