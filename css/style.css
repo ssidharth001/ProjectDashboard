@@ -613,17 +613,22 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 .display-on-invoice-generate {display: none;}
 
 /* -----------------------DAILY STATUS--------------------------------  */
+
 .status-history-drawer {
-    display: flex;
+    display: none;
     /* width: 100%; */
     flex-direction: column;
     align-items: center;
-    transition: all 0.5s; 
     position: fixed;
     bottom: 0;
-    margin-bottom: -100px;
+    margin-bottom: -370px;
     transition: all 0.5s;
 }
+
+.active-drawer {
+    margin-bottom: 70px;
+}
+
 .drawer-handle {
     flex: 1;
     padding: 10px;
@@ -647,8 +652,9 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 .status-card {
     flex-basis: 46%;
     margin: auto;
-    margin-top: 25px;
-    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 180px;
     background-color: var(--secondary-color);
     border-radius: 20px;
 }
@@ -745,7 +751,7 @@ option {
 .footer {
     z-index: 1;
     background-color: var(--primary-color);
-    height: 50px;
+    height: 53px;
     width: 100%;
     box-shadow: 1px -1px 6px 0px rgb(14, 20, 24);
 }

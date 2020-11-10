@@ -308,18 +308,21 @@ function displayDetailsTab() {
 }
 
 detailsTab.addEventListener('click', _ => {
+    document.querySelector('.status-history-drawer').style.display = "none";
     detailsTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "block"
     setVisibility("project-details-tab", "block")
 });
 
 resourceTab.addEventListener('click', _ => {
+    document.querySelector('.status-history-drawer').style.display = "none";
     resourceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
     setVisibility("resource", "flex")
 });
 
 invoiceTab.addEventListener('click', _ => {
+    document.querySelector('.status-history-drawer').style.display = "none";
     invoiceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
     setVisibility("invoice", "flex")
@@ -327,8 +330,9 @@ invoiceTab.addEventListener('click', _ => {
 
 statusTab.addEventListener('click', _ => {
     statusTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
-    document.getElementById("project-headings--edit").style.display = "none"
-    setVisibility("status", "flex")
+    document.getElementById("project-headings--edit").style.display = "none";
+    setVisibility("status", "flex");
+    document.querySelector('.status-history-drawer').style.display = "flex";
 })
 
 

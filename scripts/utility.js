@@ -237,3 +237,9 @@ function createChart(canvas, labels, legendLabel, dataValues, backgroundColorVal
         }
     })
 }
+
+
+document.querySelector('.drawer-handle').addEventListener('click', ()=>{
+    document.querySelector('.status-history-drawer').classList.toggle('active-drawer')
+  })
+  
