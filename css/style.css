@@ -438,7 +438,7 @@ a {text-decoration: none;}
     align-self: center;
 }
 
-.project-details {margin: 0 45px;}
+/* .project-details {margin: 0 45px;} */
 .project-headings { justify-content: space-between;}
 .project-headings--details,
 .project-headings--resources,
@@ -615,13 +615,14 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 /* -----------------------DAILY STATUS--------------------------------  */
 .status-history-drawer {
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     flex-direction: column;
     align-items: center;
     transition: all 0.5s; 
     position: fixed;
     bottom: 0;
     margin-bottom: -100px;
+    transition: all 0.5s;
 }
 .drawer-handle {
     flex: 1;
@@ -639,7 +640,8 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
     display: flex;
     flex-wrap: wrap;
     margin-top: -3px;
-
+    /* height: 350px; */
+    overflow: scroll;
 }
 
 .status-card {
@@ -692,8 +694,6 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 .................................................*/
 
 .footer {
-    /* position: fixed;
-    bottom:0; */
     z-index: 1;
     background-color: var(--primary-color);
     height: 50px;
