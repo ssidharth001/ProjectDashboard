@@ -345,11 +345,55 @@
                     
                     <!-- Daily status Tab starts -->
                     <div class="status" id="status">
-                        <div class="status-content display-flex-column-align">
-                            <div>
-                            
+                        <div>
+                            <div class="status-date">
+                                <form>
+                                    <label for="work-date">Date:</label>
+                                    <select id="work-date" name="workDate">
+                                      <option>1/11/2020</option>
+                                      <option>2/11/2020</option>
+                                      <option>3/11/2020</option>
+                                    </select>
+                                </form>
                             </div>
-
+                            <div class="status-fields">
+                                <div class="resource-field">
+                                    <form>
+                                        <label for="resource-list">Resource Name:</label>
+                                        <select id="resource-list" name="resourceList">
+                                          <option>None</option>
+                                          <option>Nikhil</option>
+                                          <option>Sidharth</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                    <div class="activity-field">
+                                        <form>
+                                            <label for="activity-type">Activity Type:</label>
+                                            <select id="activity-type" name="activityType">
+                                            <option>Coding</option>
+                                            <option>Testing</option>
+                                            <option>Management</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="working-hours-field">
+                                        <form>
+                                            <label for="working-hours">Working Hours:</label>
+                                            <select id="working-hours" name="workingHours">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                            </div>
+                            <div>
+                                <input type="submit" class="status-submit-btn">
+                            </div>
+                            
                         </div>
                     </div>
                     

@@ -376,3 +376,17 @@ expandOrCollapse.addEventListener('click', _ => {
 document.querySelector(".project-list__body").addEventListener('click', _ => {
     if(window.outerWidth < 630) collapseContent()
 })
+
+// var today = new Date();
+// var dd = Number(String(today.getDate()).padStart(2, '0'))
+// var ddlimit = Number(String(today.getDate()).padStart(2, '0'))-7;
+// var mm = Number(String(today.getMonth() + 1).padStart(2, '0')); //January is 0!
+// var yyyy = Number(today.getFullYear());
+// var allDates = []
+
+// while(ddlimit <= dd){
+// 	today = ddlimit + '/' + mm + '/' + yyyy;
+//   allDates.push(today);
+//   ddlimit++
+// }
+// console.log(allDates.reverse());
