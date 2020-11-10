@@ -628,6 +628,7 @@ label{
     margin: 10px 0px;
     padding: 10px 5px;
     display: flex;
+    background-color: var(--primary-color);
 }
 
 .resource-field,
@@ -653,11 +654,11 @@ option {
 }
 
 .status-submit-btn {
-    padding: 10px;
+    padding: 5px;
     border-radius: 3px;
     border: none;
     background-color: #9bb9ca;
-    align-items: center;
+    margin: 20px;
 }
 
 /*................................................
