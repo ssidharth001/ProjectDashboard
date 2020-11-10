@@ -154,6 +154,10 @@
         padding-left: 25%;
     }
     .resource .margin-right10 {margin: 0 50% 0 0;}
+
+    .status-history-drawer {
+        margin-right: 0px;
+    }
 }
 
 @media (max-width:671px) {
