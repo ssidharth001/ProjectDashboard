@@ -66,3 +66,44 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     }
 
 })
+
+//---------- Loading status history dynamically----------------
+get()
+const statusContainer = document.querySelector(".status-container");
+statusContainer.innerHTML +=`<div class="status-card">   
+<div class="dates-section">
+    <p><span class="date">11/01/2020</span></p>
+</div>
+<div class="details-section">
+    <div class="details-content">
+        <p><span class="details" id="serialnumber">1</span></p>
+        <p>Name: <span class="details" id="name">Nikhil</span></p>
+        <P>Activity:  <span class="details" id="activity">developer</span></P>
+        <p>Hours:  <span class="details" id="hours">8</span></p>
+
+    </div>
+    <div class="details-content">
+        <p><span class="details" id="serialnumber">1</span></p>
+        <p>Name: <span class="details" id="name">Nikhil</span></p>
+        <P>Activity:  <span class="details" id="activity">developer</span></P>
+        <p>Hours:  <span class="details" id="hours">8</span></p>
+
+    </div>
+    <div class="details-content">
+        <p><span class="details" id="serialnumber">1</span></p>
+        <p>Name: <span class="details" id="name">Nikhil</span></p>
+        <P>Activity:  <span class="details" id="activity">developer</span></P>
+        <p>Hours:  <span class="details" id="hours">8</span></p>
+
+    </div>
+    <div class="details-content">
+        <p><span class="details" id="serialnumber">1</span></p>
+        <p>Name: <span class="details" id="name">Nikhil</span></p>
+        <P>Activity:  <span class="details" id="activity">developer</span></P>
+        <p>Hours:  <span class="details" id="hours">8</span></p>
+
+    </div>
+    
+
+</div>
+</div>`
