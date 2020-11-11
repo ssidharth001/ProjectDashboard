@@ -1,10 +1,13 @@
 // Urls of remote data storage bin and secret key to access the data.
 const urlList = {
     "projects": "https://api.jsonbin.io/b/5f9fab6347077d298f5b955e",
-    "resources": "https://api.jsonbin.io/b/5f9fabb447077d298f5b9576"
+    "resources": "https://api.jsonbin.io/b/5f9fabb447077d298f5b9576",
+    "statuses": "https://api.jsonbin.io/b/5fab766e5677ab0aa14af561"
 }
 
 const secretKey = "$2b$10$13A5uhCyWMeIqOInL3bdeuAlJSI2Nx5J2h2HciLIGw1nb6Xm/NwRe";
+
+const statusSecretKey = "$2b$10$b3HdJLya6P949p.eYlsxQuusyZSqNRrDPHWTobEvW9/c15QlIWZrK"
 
 let get = function (url, secretKey, callback) {
     let req = new XMLHttpRequest();
@@ -31,6 +34,10 @@ function storeProjectData(res) {
 
 function storeResourceData(res) {
     resources = res;
+}
+
+function storeStatusData(res){
+    statusDetails = res
 }
 
 let put = function (url, secretKey, obj, callback) {

@@ -1,12 +1,14 @@
 // Global variables to store data commonly accessed by multiple functions.
 let projects;
 let resources;
+let statusDetails;
 let selectedProjectId;
 
 // Fetches all dashboard data.
 const fetchDashboardData = () => {
     get(urlList.projects, secretKey, storeProjectData);
     get(urlList.resources, secretKey, storeResourceData);
+    get(urlList.statuses, statusSecretKey, storeStatusData)
 
     selectedProjectId = projects.projectList.length - 1;
     loadProjectList();
