@@ -33,6 +33,7 @@ function loadProjectList() {
 
                 const newSelectedProjectId = e.currentTarget.dataset.projectid;
                 document.querySelector("#footer").style.position="unset";
+                drawerToggler()
                 document.querySelector('.status-history-drawer').style.display = "none";
                 selectProject(newSelectedProjectId);
                 

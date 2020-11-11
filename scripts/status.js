@@ -89,16 +89,17 @@ for(const details in currentDateDetails){
         <div class="details-section">
         </div>
     </div>`;
- 
+    let serialNumber = 1;
     for(const resources of currentDateDetails[details]){
+
         document.querySelectorAll('.details-section')[i].innerHTML += 
         `<div class="details-content">
-            <p><span class="details" id="serialnumber">1</span></p>
+            <span style="padding: 0px 10px;" id="serialnumber">${serialNumber}</span>
             <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
             <P>Activity:  <span class="details" id="activity">${resources.activityType}</span></P>
-            <p>Hours:  <span class="details" id="hours">${resources.workHours}</span></p>
+            Hours:  <span style = "padding-right:10px" id="hours">${resources.workHours}</span>
         </div>` 
-        
+        serialNumber++;
     }
     i++
 }
