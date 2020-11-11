@@ -68,7 +68,7 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
         }
         allStatusDetails.push(dailyStatusDetail)
         // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
-        document.querySelector(".status-popup").style.display = "block";
+        document.querySelector('.no-selection-error').innerHTML = `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
     }
     
 })

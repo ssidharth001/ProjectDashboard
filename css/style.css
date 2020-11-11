@@ -786,7 +786,3 @@ option {
 .footer__content {color: var(--font-color);
 font-size: 12px;}
 
-/* status pop up */
-.status-popup {
-    display: none;
-}
