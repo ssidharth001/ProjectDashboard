@@ -36,6 +36,7 @@ function loadProjectList() {
                 drawerToggler()
                 document.querySelector('.status-history-drawer').style.display = "none";
                 selectProject(newSelectedProjectId);
+                statusResOptn();
                 
             });
         });
@@ -409,7 +410,6 @@ function totalHours() {
 
     const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
     for(const list in resourceWorkHours) {
-        console.log(list);
         detailsResourceOptions.innerHTML += `<option>${list}</option>`
     }
     
@@ -424,4 +424,19 @@ function totalHours() {
    
 }
 
-
+let statusResourceList = ['None'];
+function statusResOptn() {
+    const statusResourceOptions = document.querySelector('#resource-list');
+    statusResourceOptions.innerHTML = `<option>None</option>`;
+    const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
+    
+   
+    if(resources[getCurrentProjectId] != undefined) {
+        
+    for(const list of resources[getCurrentProjectId]){
+        console.log(list);
+        statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
+        
+    }
+    }
+} 

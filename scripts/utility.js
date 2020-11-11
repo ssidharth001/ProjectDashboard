@@ -2,7 +2,7 @@
 const urlList = {
     "projects": "https://api.jsonbin.io/b/5fac059f99665a2aeb42c005",
     "resources": "https://api.jsonbin.io/b/5fac052999665a2aeb42bfc0",
-    "statuses": "https://api.jsonbin.io/b/5fab766e5677ab0aa14af561"
+    "statuses": "https://api.jsonbin.io/b/5fac116c48818715939f5af2"
 }
 
 const secretKey = "$2b$10$b3HdJLya6P949p.eYlsxQuusyZSqNRrDPHWTobEvW9/c15QlIWZrK";

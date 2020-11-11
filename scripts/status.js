@@ -29,18 +29,19 @@ for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
 
-statusResourceList = ['None']
-resources.forEach(element => {if(element != null){element.map(obj => {
-    statusResourceList.push(obj.name)
-  })}})
-const uniqueResources = new Set(statusResourceList)
 
-const statusResourceOptions = document.querySelector('#resource-list');
 
-for(const list of uniqueResources){
-    statusResourceOptions.innerHTML += `<option>${list}</option>`;
+// resources.forEach(element => {if(element != null){element.map(obj => {
+//     statusResourceList.push(obj.name)
+//   })}})
+// const uniqueResources = new Set(statusResourceList)
+
+// const statusResourceOptions = document.querySelector('#resource-list');
+
+// for(const list of uniqueResources){
+//     statusResourceOptions.innerHTML += `<option>${list}</option>`;
     
-}
+// }
 
 let Statusobj = []
 let allStatusDetails = [...statusDetails]
