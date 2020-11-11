@@ -35,6 +35,7 @@ function loadProjectList() {
                 document.querySelector("#footer").style.position="unset";
                 drawerToggler()
                 document.querySelector('.status-history-drawer').style.display = "none";
+                document.querySelector('.no-selection-error').innerHTML = "";
                 selectProject(newSelectedProjectId);
                 statusResOptn();
                 loadingHistory();
@@ -96,6 +97,7 @@ function selectProject(newSelectedProjectId) {
 // Loads project details tab.
 function loadDetails() {
     totalHours();
+    statusResOptn();
     const selectedProject = projects.projectList[selectedProjectId];
 
     // Section One - Project name, client name, project manager, project status
@@ -320,6 +322,7 @@ function displayDetailsTab() {
 
 detailsTab.addEventListener('click', _ => {
     document.querySelector("#footer").style.position="unset";
+    document.querySelector('.no-selection-error').innerHTML = "";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     detailsTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
@@ -328,6 +331,7 @@ detailsTab.addEventListener('click', _ => {
 });
 
 resourceTab.addEventListener('click', _ => {
+    document.querySelector('.no-selection-error').innerHTML = "";
     document.querySelector("#footer").style.position="unset";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
@@ -337,6 +341,7 @@ resourceTab.addEventListener('click', _ => {
 });
 
 invoiceTab.addEventListener('click', _ => {
+    document.querySelector('.no-selection-error').innerHTML = "";
     document.querySelector("#footer").style.position="unset";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
@@ -411,6 +416,7 @@ function totalHours() {
     })
 
     const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
+    detailsResourceOptions.innerHTML = `<option>None</option>`;
     for(const list in resourceWorkHours) {
         detailsResourceOptions.innerHTML += `<option>${list}</option>`
     }
@@ -429,7 +435,7 @@ function totalHours() {
 let statusResourceList = ['None'];
 const statusResourceOptions = document.querySelector('#resource-list');
 function statusResOptn() {
-    
+    const statusResourceOptions = document.querySelector('#resource-list');
     statusResourceOptions.innerHTML = `<option>None</option>`;
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
     

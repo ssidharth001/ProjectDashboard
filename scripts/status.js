@@ -45,7 +45,6 @@ for(const list of workingHoursList){
 
 
 
-let Statusobj = []
 let allStatusDetails = [...statusDetails]
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
@@ -68,10 +67,10 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        document.querySelector(".status-popup").style.display = "block";
     }
     
-
 })
 
 //---------- Loading status history dynamically----------------
