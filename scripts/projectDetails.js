@@ -37,6 +37,8 @@ function loadProjectList() {
                 document.querySelector('.status-history-drawer').style.display = "none";
                 selectProject(newSelectedProjectId);
                 statusResOptn();
+                loadingHistory();
+                
                 
             });
         });

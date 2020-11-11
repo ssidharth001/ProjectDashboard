@@ -43,6 +43,8 @@ for(const list of workingHoursList){
     
 // }
 
+
+
 let Statusobj = []
 let allStatusDetails = [...statusDetails]
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
@@ -51,7 +53,7 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedDateOptn = statusDateOptions.options[statusDateOptions.selectedIndex].value;
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
     const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
-    const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value
+    const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
 
     if(selectedResourceOptn === 'None'){
         alert('incorrect')
@@ -66,43 +68,57 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
         allStatusDetails.push(dailyStatusDetail)
         put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
     }
+    
 
 })
 
 //---------- Loading status history dynamically----------------
 
-const statusDates = [...new Set(statusDetails.map((e)=>e.date))]
-const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
-const currentDateDetails = {}
-
-sortedstatusDates.forEach((e)=>{
-    currentDateDetails[e] = statusDetails.filter((d)=> d.date == e)
-})
-
-let i = 0 ;  
-for(const details in currentDateDetails){
-    const statusContainer = document.querySelector(".status-container");
-    statusContainer.innerHTML +=
-    `<div class="status-card">   
-        <div class="dates-section">
-            <p><span class="date">${ details }</span></p>
-        </div>
-        <div class="details-section">
-        </div>
-    </div>`;
-    let serialNumber = 1;
-    for(const resources of currentDateDetails[details]){
-
-        document.querySelectorAll('.details-section')[i].innerHTML += 
-        `<div class="details-content">
-            <span style="padding: 0px 10px;" id="serialnumber">${serialNumber}</span>
-            <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
-            <P>Activity:  <span class="details" id="activity">${resources.activityType}</span></P>
-            Hours:  <span style = "padding-right:10px" id="hours">${resources.workHours}</span>
-        </div>` 
-        serialNumber++;
+function loadingHistory() {
+    document.querySelector(".status-container").innerHTML = "";
+    const CurrentProjectId = document.querySelector('.selection').dataset.projectid
+    const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
+    const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
+    console.log(currentProjStatus);
+    if(currentProjStatus) {
+        const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
+        const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
+        const currentDateDetails = {}
+    
+        sortedstatusDates.forEach((e)=>{
+            currentDateDetails[e] = currentProjStatus.filter((d)=> d.date == e)
+        })
+    
+        let i = 0 ;  
+        for(const details in currentDateDetails){
+            const statusContainer = document.querySelector(".status-container");
+            statusContainer.innerHTML +=
+            `<div class="status-card">   
+                <div class="dates-section">
+                    <p><span class="date">${ details }</span></p>
+                </div>
+                <div class="details-section">
+                </div>
+            </div>`;
+            let serialNumber = 1;
+            for(const resources of currentDateDetails[details]){
+    
+                document.querySelectorAll('.details-section')[i].innerHTML += 
+                `<div class="details-content">
+                    <span style="padding: 0px 10px;" id="serialnumber">${serialNumber}</span>
+                    <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
+                    <p>Activity:  <span class="details" id="activity">${resources.activityType}</span></p>
+                    Hours:  <span style = "padding-right:10px" id="hours">${resources.workHours}</span>
+                </div>` 
+                serialNumber++;
+            }
+            i++
+        }
     }
-    i++
+    else {
+
+    }
+   
 }
 
-
+loadingHistory();
