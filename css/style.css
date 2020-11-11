@@ -767,4 +767,5 @@ option {
     box-shadow: 1px -1px 6px 0px rgb(14, 20, 24);
 }
 
-.footer__content {color: var(--font-color);}
+.footer__content {color: var(--font-color);
+font-size: 12px;}

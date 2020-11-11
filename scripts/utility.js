@@ -247,6 +247,10 @@ function createChart(canvas, labels, legendLabel, dataValues, backgroundColorVal
 
 
 document.querySelector('.drawer-handle').addEventListener('click', ()=>{
-    document.querySelector('.status-history-drawer').classList.toggle('active-drawer')
+    document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
+    const showHideTxt = document.querySelector('.show-hide')
+    if(showHideTxt.innerHTML == 'Show'){
+        showHideTxt.innerHTML = 'Hide'
+    } else {showHideTxt.innerHTML = 'Show'}
   })
   
