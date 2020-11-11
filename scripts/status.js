@@ -36,10 +36,10 @@ resources.forEach(element => {if(element != null){element.map(obj => {
 const uniqueResources = new Set(statusResourceList)
 
 const statusResourceOptions = document.querySelector('#resource-list');
-const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
+
 for(const list of uniqueResources){
     statusResourceOptions.innerHTML += `<option>${list}</option>`;
-    detailsResourceOptions.innerHTML += `<option>${list}</option>`
+    
 }
 
 let Statusobj = []
@@ -63,7 +63,6 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        console.log(allStatusDetails)
         put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
     }
 
@@ -81,7 +80,6 @@ sortedstatusDates.forEach((e)=>{
 
 let i = 0 ;  
 for(const details in currentDateDetails){
-    console.log(details)
     const statusContainer = document.querySelector(".status-container");
     statusContainer.innerHTML +=
     `<div class="status-card">   
@@ -100,7 +98,6 @@ for(const details in currentDateDetails){
             <P>Activity:  <span class="details" id="activity">${resources.activityType}</span></P>
             <p>Hours:  <span class="details" id="hours">${resources.workHours}</span></p>
         </div>` 
-        console.log(resources)
         
     }
     i++
