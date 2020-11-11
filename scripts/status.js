@@ -39,23 +39,30 @@ const statusResourceOptions = document.querySelector('#resource-list')
 for(const list of uniqueResources){
     statusResourceOptions.innerHTML += `<option>${list}</option>`
 }
+
 let Statusobj = []
+let allStatusDetails = [...statusDetails]
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
+    const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
+    const getCurrentProject = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
     const selectedDateOptn = statusDateOptions.options[statusDateOptions.selectedIndex].value;
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
-    const selectedActivityOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
-    const selectedHourOptn = statusHourOptions.options[statusResourceOptions.selectedIndex].value
+    const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
+    const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value
 
-    let dailyStatusDetail = {
-        projectName: 'xyz',
-        date: selectedDateOptn,
-        resourceName: selectedResourceOptn,
-        activityType: selectedActivityOptn,
-        workHours: selectedHourOptn
+    if(selectedResourceOptn === 'None'){
+        alert('incorrect')
+    } else {
+        let dailyStatusDetail = {
+            projectName: getCurrentProject,
+            date: selectedDateOptn,
+            resourceName: selectedResourceOptn,
+            activityType: selectedActivityOptn,
+            workHours: selectedHourOptn
+        }
+        allStatusDetails.push(dailyStatusDetail)
+        console.log(allStatusDetails)
+        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
     }
-    Statusobj.push(dailyStatusDetail)
-    console.log(dailyStatusDetail)
+
 })
-
-
-
