@@ -35,9 +35,11 @@ resources.forEach(element => {if(element != null){element.map(obj => {
   })}})
 const uniqueResources = new Set(statusResourceList)
 
-const statusResourceOptions = document.querySelector('#resource-list')
+const statusResourceOptions = document.querySelector('#resource-list');
+const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
 for(const list of uniqueResources){
-    statusResourceOptions.innerHTML += `<option>${list}</option>`
+    statusResourceOptions.innerHTML += `<option>${list}</option>`;
+    detailsResourceOptions.innerHTML += `<option>${list}</option>`
 }
 
 let Statusobj = []
@@ -68,8 +70,7 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
 })
 
 //---------- Loading status history dynamically----------------
-const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
-const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
+
 const statusDates = [...new Set(statusDetails.map((e)=>e.date))]
 const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
 const currentDateDetails = {}

@@ -382,3 +382,10 @@ expandOrCollapse.addEventListener('click', _ => {
 document.querySelector(".project-list__body").addEventListener('click', _ => {
     if(window.outerWidth < 630) collapseContent()
 })
+const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
+const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
+const resourceWorkHours = {}
+statusDetails.reduce((a,v) => (v.projectName == CurrentProjectName ? resourceWorkHours[v.resourceName] = Number(v.workHours) + a : 0 ),0)
+
+console.log(resourceWorkHours)
+
