@@ -34,7 +34,6 @@ function loadProjectList() {
                 const newSelectedProjectId = e.currentTarget.dataset.projectid;
                 document.querySelector("#footer").style.position="unset";
                 document.querySelector('.status-history-drawer').style.display = "none";
-                document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
                 selectProject(newSelectedProjectId);
                 
             });
@@ -317,8 +316,8 @@ function displayDetailsTab() {
 
 detailsTab.addEventListener('click', _ => {
     document.querySelector("#footer").style.position="unset";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
-    document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
     detailsTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "block"
     setVisibility("project-details-tab", "block")
@@ -326,8 +325,8 @@ detailsTab.addEventListener('click', _ => {
 
 resourceTab.addEventListener('click', _ => {
     document.querySelector("#footer").style.position="unset";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
-    document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
     resourceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
     setVisibility("resource", "flex")
@@ -335,8 +334,8 @@ resourceTab.addEventListener('click', _ => {
 
 invoiceTab.addEventListener('click', _ => {
     document.querySelector("#footer").style.position="unset";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
-    document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
     invoiceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
     setVisibility("invoice", "flex")

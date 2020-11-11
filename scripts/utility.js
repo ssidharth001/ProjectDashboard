@@ -244,7 +244,12 @@ function createChart(canvas, labels, legendLabel, dataValues, backgroundColorVal
         }
     })
 }
-
+function drawerToggler(){
+    const toggleDrawer = document.querySelector('.status-history-drawer').classList;
+    if(toggleDrawer == "status-history-drawer active-drawer"){
+        toggleDrawer.toggle('active-drawer')
+    }
+}
 
 document.querySelector('.drawer-handle').addEventListener('click', ()=>{
     document.querySelector('.status-history-drawer').classList.toggle('active-drawer');
