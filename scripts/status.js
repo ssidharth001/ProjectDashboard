@@ -61,7 +61,7 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
         loadingHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
