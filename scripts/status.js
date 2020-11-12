@@ -29,22 +29,6 @@ for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
 
-
-
-// resources.forEach(element => {if(element != null){element.map(obj => {
-//     statusResourceList.push(obj.name)
-//   })}})
-// const uniqueResources = new Set(statusResourceList)
-
-// const statusResourceOptions = document.querySelector('#resource-list');
-
-// for(const list of uniqueResources){
-//     statusResourceOptions.innerHTML += `<option>${list}</option>`;
-    
-// }
-
-
-
 let allStatusDetails = [...statusDetails]
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
@@ -67,8 +51,13 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
-        document.querySelector('.no-selection-error').innerHTML = `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
+        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        document.querySelector('.no-selection-error').innerHTML =
+        `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
+        setTimeout(function(){
+            document.querySelector('.no-selection-error').innerHTML = ""
+           }, 2000);
+
     }
     
 })
