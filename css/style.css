@@ -711,6 +711,12 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
     font-weight: normal;
 }
 
+.no-status {
+    text-align: center;
+    align-self: center;
+    flex: 1;
+}
+
 /* 5.4. RESOURCES SECTION */
 
 .status-date{

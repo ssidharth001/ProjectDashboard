@@ -1,3 +1,5 @@
+// Adding status details in status tab 
+
 const today = new Date();
 const dateToday = Number(String(today.getDate()).padStart(2, '0'))
 let ddlimit = Number(String(today.getDate()).padStart(2, '0')) - 7;
@@ -28,6 +30,8 @@ const statusHourOptions = document.querySelector('#working-hours')
 for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
+
+// status submit function and validation 
 
 let allStatusDetails = statusDetails
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
@@ -79,7 +83,9 @@ function loadingHistory() {
     const CurrentProjectId = document.querySelector('.selection').dataset.projectid
     const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
     const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
-    if(currentProjStatus) {
+    console.log(currentProjStatus);
+    if(currentProjStatus.length !== 0) {
+        console.log("inside if");
         const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
         const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
         currentDateDetails = {}
@@ -90,7 +96,7 @@ function loadingHistory() {
     
         let i = 0 ;  
         for(const details in currentDateDetails){
-            const statusContainer = document.querySelector(".status-container");
+            let statusContainer = document.querySelector(".status-container");
             statusContainer.innerHTML +=
             `<div class="status-card">   
                 <div class="dates-section">
@@ -115,7 +121,8 @@ function loadingHistory() {
         }
     }
     else {
-
+        console.log("hello");
+        document.querySelector(".status-container").innerHTML = `<p class="no-status">No status history available</p>`
     }
    
 }
