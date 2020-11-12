@@ -29,7 +29,7 @@ for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
 
-let allStatusDetails = [...statusDetails]
+let allStatusDetails = statusDetails
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
     const getCurrentProject = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
@@ -37,10 +37,20 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
     const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
     const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
+    let selectedResourceExist = false
+    
+    if(currentDateDetails[selectedDateOptn]){
+        for(const details of currentDateDetails[selectedDateOptn]){
+            if(details.resourceName == selectedResourceOptn){selectedResourceExist = true}
+        }
+    }
 
     if(selectedResourceOptn === 'None'){
         document.querySelector('.no-selection-error').innerHTML = 
         `<p style="color: rgb(228, 49, 49);font-size: 12px;">Select resource</p>`
+    } else if(selectedResourceExist == true){
+        document.querySelector('.no-selection-error').innerHTML = 
+        `<p style="color: rgb(228, 49, 49);font-size: 12px;">Status already exist for resource</p>`
     } else {
         document.querySelector('.no-selection-error').innerHTML = ""
         let dailyStatusDetail = {
@@ -51,29 +61,28 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        loadingHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
         setTimeout(function(){
             document.querySelector('.no-selection-error').innerHTML = ""
            }, 2000);
-
     }
     
 })
 
 //---------- Loading status history dynamically----------------
-
+let currentDateDetails = {}
 function loadingHistory() {
     document.querySelector(".status-container").innerHTML = "";
     const CurrentProjectId = document.querySelector('.selection').dataset.projectid
     const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
     const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
-    console.log(currentProjStatus);
     if(currentProjStatus) {
         const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
         const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
-        const currentDateDetails = {}
+        currentDateDetails = {}
     
         sortedstatusDates.forEach((e)=>{
             currentDateDetails[e] = currentProjStatus.filter((d)=> d.date == e)
@@ -112,3 +121,4 @@ function loadingHistory() {
 }
 
 loadingHistory();
+
