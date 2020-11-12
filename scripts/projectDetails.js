@@ -30,7 +30,7 @@ function loadProjectList() {
             // Adds an event listener to each project card.
             // Invokes function to implement selection of project card.
             projectCard.addEventListener('click', function (e) {
-
+                document.querySelector(".resource-hours").innerHTML = "";
                 const newSelectedProjectId = e.currentTarget.dataset.projectid;
                 document.querySelector("#footer").style.position="unset";
                 drawerToggler()
@@ -404,6 +404,7 @@ document.querySelector(".project-list__body").addEventListener('click', _ => {
     if(window.outerWidth < 630) collapseContent()
 })
 
+// display total hours in details tab 
 
 function totalHours() {
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
@@ -425,12 +426,19 @@ function totalHours() {
     document.querySelector(".hours-btn").addEventListener("click", () => {
         const resourceOptions = document.querySelector("#resource-list-detailstab");
         const selectedOptn = resourceOptions.options[resourceOptions.selectedIndex].value;
-        document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOptn];
+        if(selectedOptn != "None") {
+            document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOptn];
+        }
+        else {
+            document.querySelector(".resource-hours").innerHTML = `---`;
+        }
 
 
     })
    
 }
+
+// resource options in status tab 
 
 let statusResourceList = ['None'];
 const statusResourceOptions = document.querySelector('#resource-list');

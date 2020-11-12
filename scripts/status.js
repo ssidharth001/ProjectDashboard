@@ -1,3 +1,5 @@
+// Adding status details in status tab 
+
 const today = new Date();
 const dateToday = Number(String(today.getDate()).padStart(2, '0'))
 let ddlimit = Number(String(today.getDate()).padStart(2, '0')) - 7;
@@ -28,6 +30,8 @@ const statusHourOptions = document.querySelector('#working-hours')
 for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
+
+// status submit function and validation 
 
 let allStatusDetails = statusDetails
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
