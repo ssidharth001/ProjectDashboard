@@ -56,8 +56,10 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
 
     if(selectedResourceOptn === 'None'){
-        alert('incorrect')
+        document.querySelector('.no-selection-error').innerHTML = 
+        `<p style="color: rgb(228, 49, 49);font-size: 12px;">Select resource</p>`
     } else {
+        document.querySelector('.no-selection-error').innerHTML = ""
         let dailyStatusDetail = {
             projectName: getCurrentProject,
             date: selectedDateOptn,

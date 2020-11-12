@@ -427,8 +427,9 @@ function totalHours() {
 }
 
 let statusResourceList = ['None'];
+const statusResourceOptions = document.querySelector('#resource-list');
 function statusResOptn() {
-    const statusResourceOptions = document.querySelector('#resource-list');
+    
     statusResourceOptions.innerHTML = `<option>None</option>`;
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
     
