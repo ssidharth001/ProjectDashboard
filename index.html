@@ -283,6 +283,25 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <div class="project-hours">
+                            <div class="description-content display-flex column-align">
+                                <div class="main-details-label">Total Working Hours:  <span class="total-work-hours"></span></div>
+                                <div style="display: flex;">
+                                    <form>
+                                        <label class="resource-optn-label" for="resource-list-detailstab">Resource Name:</label>
+                                        <select id="resource-list-detailstab" name="resourceList">
+                                             <!--resource options-->
+                                        </select>
+                                    </form>
+                                    <div style="align-self: center;">
+                                        <input type="submit" value ="Show Hours" class="hours-btn">
+                                    </div>
+                                </div>
+                               
+                                <div>Total Hours:<span class="resource-hours"></span></div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Project Details Tab Ends -->
 
@@ -381,6 +400,7 @@
                                         </form>
                                     </div>
                             </div>
+                            <span class="no-selection-error"></span>
                             <div>
                                 <input type="submit" class="status-submit-btn">
                             </div>
@@ -402,9 +422,11 @@
                 </div>
 
             </div>
+           
         </section>
 
     </main>
+
     <!-- Main content ends-->
 
     <!-- Footer begins-->

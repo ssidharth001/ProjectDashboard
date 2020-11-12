@@ -29,18 +29,6 @@ for(const list of workingHoursList){
     statusHourOptions.innerHTML += `<option>${list}</option>`
 }
 
-statusResourceList = ['None']
-resources.forEach(element => {if(element != null){element.map(obj => {
-    statusResourceList.push(obj.name)
-  })}})
-const uniqueResources = new Set(statusResourceList)
-
-const statusResourceOptions = document.querySelector('#resource-list')
-for(const list of uniqueResources){
-    statusResourceOptions.innerHTML += `<option>${list}</option>`
-}
-
-let Statusobj = []
 let allStatusDetails = [...statusDetails]
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
@@ -48,11 +36,13 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedDateOptn = statusDateOptions.options[statusDateOptions.selectedIndex].value;
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
     const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
-    const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value
+    const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
 
     if(selectedResourceOptn === 'None'){
-        alert('incorrect')
+        document.querySelector('.no-selection-error').innerHTML = 
+        `<p style="color: rgb(228, 49, 49);font-size: 12px;">Select resource</p>`
     } else {
+        document.querySelector('.no-selection-error').innerHTML = ""
         let dailyStatusDetail = {
             projectName: getCurrentProject,
             date: selectedDateOptn,
@@ -61,48 +51,64 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        console.log(allStatusDetails)
         put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
-    }
+        document.querySelector('.no-selection-error').innerHTML =
+        `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
+        setTimeout(function(){
+            document.querySelector('.no-selection-error').innerHTML = ""
+           }, 2000);
 
+    }
+    
 })
 
 //---------- Loading status history dynamically----------------
-const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
-const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
-const statusDates = [...new Set(statusDetails.map((e)=>e.date))]
-const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
-const currentDateDetails = {}
 
-sortedstatusDates.forEach((e)=>{
-    currentDateDetails[e] = statusDetails.filter((d)=> d.date == e)
-})
-
-let i = 0 ;  
-for(const details in currentDateDetails){
-    console.log(details)
-    const statusContainer = document.querySelector(".status-container");
-    statusContainer.innerHTML +=
-    `<div class="status-card">   
-        <div class="dates-section">
-            <p><span class="date">${ details }</span></p>
-        </div>
-        <div class="details-section">
-        </div>
-    </div>`;
- 
-    for(const resources of currentDateDetails[details]){
-        document.querySelectorAll('.details-section')[i].innerHTML += 
-        `<div class="details-content">
-            <p><span class="details" id="serialnumber">1</span></p>
-            <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
-            <P>Activity:  <span class="details" id="activity">${resources.activityType}</span></P>
-            <p>Hours:  <span class="details" id="hours">${resources.workHours}</span></p>
-        </div>` 
-        console.log(resources)
-        
+function loadingHistory() {
+    document.querySelector(".status-container").innerHTML = "";
+    const CurrentProjectId = document.querySelector('.selection').dataset.projectid
+    const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
+    const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
+    console.log(currentProjStatus);
+    if(currentProjStatus) {
+        const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
+        const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
+        const currentDateDetails = {}
+    
+        sortedstatusDates.forEach((e)=>{
+            currentDateDetails[e] = currentProjStatus.filter((d)=> d.date == e)
+        })
+    
+        let i = 0 ;  
+        for(const details in currentDateDetails){
+            const statusContainer = document.querySelector(".status-container");
+            statusContainer.innerHTML +=
+            `<div class="status-card">   
+                <div class="dates-section">
+                    <p><span class="date">${ details }</span></p>
+                </div>
+                <div class="details-section">
+                </div>
+            </div>`;
+            let serialNumber = 1;
+            for(const resources of currentDateDetails[details]){
+    
+                document.querySelectorAll('.details-section')[i].innerHTML += 
+                `<div class="details-content">
+                    <span style="padding: 0px 10px;" id="serialnumber">${serialNumber}</span>
+                    <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
+                    <p>Activity:  <span class="details" id="activity">${resources.activityType}</span></p>
+                    Hours:  <span style = "padding-right:10px" id="hours">${resources.workHours}</span>
+                </div>` 
+                serialNumber++;
+            }
+            i++
+        }
     }
-    i++
+    else {
+
+    }
+   
 }
 
-
+loadingHistory();

@@ -32,7 +32,15 @@ function loadProjectList() {
             projectCard.addEventListener('click', function (e) {
 
                 const newSelectedProjectId = e.currentTarget.dataset.projectid;
+                document.querySelector("#footer").style.position="unset";
+                drawerToggler()
+                document.querySelector('.status-history-drawer').style.display = "none";
+                document.querySelector('.no-selection-error').innerHTML = "";
                 selectProject(newSelectedProjectId);
+                statusResOptn();
+                loadingHistory();
+                
+                
             });
         });
     }
@@ -88,6 +96,8 @@ function selectProject(newSelectedProjectId) {
 
 // Loads project details tab.
 function loadDetails() {
+    totalHours();
+    statusResOptn();
     const selectedProject = projects.projectList[selectedProjectId];
 
     // Section One - Project name, client name, project manager, project status
@@ -303,6 +313,7 @@ function setVisibility(id, propertyValue) {
 
 // Displays details tab.
 function displayDetailsTab() {
+
     const detailsTab = document.getElementById("project-headings--details")
     detailsTab.style.borderBottom = "4px solid rgb(155, 185, 202)"
     document.getElementById("project-headings--edit").style.display = "block"
@@ -310,6 +321,9 @@ function displayDetailsTab() {
 }
 
 detailsTab.addEventListener('click', _ => {
+    document.querySelector("#footer").style.position="unset";
+    document.querySelector('.no-selection-error').innerHTML = "";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     detailsTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "block"
@@ -317,6 +331,9 @@ detailsTab.addEventListener('click', _ => {
 });
 
 resourceTab.addEventListener('click', _ => {
+    document.querySelector('.no-selection-error').innerHTML = "";
+    document.querySelector("#footer").style.position="unset";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     resourceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
@@ -324,6 +341,9 @@ resourceTab.addEventListener('click', _ => {
 });
 
 invoiceTab.addEventListener('click', _ => {
+    document.querySelector('.no-selection-error').innerHTML = "";
+    document.querySelector("#footer").style.position="unset";
+    drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     invoiceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none"
@@ -331,6 +351,7 @@ invoiceTab.addEventListener('click', _ => {
 })
 
 statusTab.addEventListener('click', _ => {
+    document.querySelector("#footer").style.position="fixed";
     statusTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none";
     setVisibility("status", "flex");
@@ -382,3 +403,49 @@ expandOrCollapse.addEventListener('click', _ => {
 document.querySelector(".project-list__body").addEventListener('click', _ => {
     if(window.outerWidth < 630) collapseContent()
 })
+
+
+function totalHours() {
+    const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
+    const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
+    const resourceWorkHours = {};
+    const projectNameDetails = statusDetails.filter(e => e.projectName == CurrentProjectName)
+    let resourceNamesList = [...new Set( projectNameDetails.map(e => e.resourceName))];
+    resourceNamesList.forEach(e => {
+        projectNameDetails.reduce((a,r) => (e == r.resourceName? resourceWorkHours[e] = Number(r.workHours) + a: a ),0);
+    })
+
+    const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
+    detailsResourceOptions.innerHTML = `<option>None</option>`;
+    for(const list in resourceWorkHours) {
+        detailsResourceOptions.innerHTML += `<option>${list}</option>`
+    }
+    
+    document.querySelector(".total-work-hours").innerHTML = Object.values(resourceWorkHours).reduce((a,v) => (a+v),0 );
+    document.querySelector(".hours-btn").addEventListener("click", () => {
+        const resourceOptions = document.querySelector("#resource-list-detailstab");
+        const selectedOptn = resourceOptions.options[resourceOptions.selectedIndex].value;
+        document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOptn];
+
+
+    })
+   
+}
+
+let statusResourceList = ['None'];
+const statusResourceOptions = document.querySelector('#resource-list');
+function statusResOptn() {
+    const statusResourceOptions = document.querySelector('#resource-list');
+    statusResourceOptions.innerHTML = `<option>None</option>`;
+    const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
+    
+   
+    if(resources[getCurrentProjectId] != undefined) {
+        
+    for(const list of resources[getCurrentProjectId]){
+        console.log(list);
+        statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
+        
+    }
+    }
+} 

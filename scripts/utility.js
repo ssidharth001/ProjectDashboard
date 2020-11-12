@@ -1,11 +1,11 @@
 // Urls of remote data storage bin and secret key to access the data.
 const urlList = {
-    "projects": "https://api.jsonbin.io/b/5f9fab6347077d298f5b955e",
-    "resources": "https://api.jsonbin.io/b/5f9fabb447077d298f5b9576",
-    "statuses": "https://api.jsonbin.io/b/5fab766e5677ab0aa14af561"
+    "projects": "https://api.jsonbin.io/b/5fac059f99665a2aeb42c005",
+    "resources": "https://api.jsonbin.io/b/5fac052999665a2aeb42bfc0",
+    "statuses": "https://api.jsonbin.io/b/5fac116c48818715939f5af2"
 }
 
-const secretKey = "$2b$10$13A5uhCyWMeIqOInL3bdeuAlJSI2Nx5J2h2HciLIGw1nb6Xm/NwRe";
+const secretKey = "$2b$10$b3HdJLya6P949p.eYlsxQuusyZSqNRrDPHWTobEvW9/c15QlIWZrK";
 
 const statusSecretKey = "$2b$10$b3HdJLya6P949p.eYlsxQuusyZSqNRrDPHWTobEvW9/c15QlIWZrK"
 
@@ -244,7 +244,14 @@ function createChart(canvas, labels, legendLabel, dataValues, backgroundColorVal
         }
     })
 }
-
+function drawerToggler(){
+    const toggleDrawer = document.querySelector('.status-history-drawer').classList;
+    const showHideTxt = document.querySelector('.show-hide');
+    if(toggleDrawer == "status-history-drawer active-drawer"){
+        showHideTxt.innerHTML = 'Show';
+        toggleDrawer.toggle('active-drawer')
+    }
+}
 
 document.querySelector('.drawer-handle').addEventListener('click', ()=>{
     document.querySelector('.status-history-drawer').classList.toggle('active-drawer');

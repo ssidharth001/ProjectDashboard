@@ -479,7 +479,8 @@ a {text-decoration: none;}
 
 .main-details,
 .project-technology,
-.project-description {
+.project-description,
+.project-hours {
     padding: 15px; 
     border: 0.1px dotted var(--font-color);
     border-radius: 6px;
@@ -621,10 +622,10 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
     align-items: center;
     position: fixed;
     bottom: 0;
-    margin-bottom: -370px;
+    margin-bottom: -380px;
     transition: all 0.5s;
     margin-right: 45px;
-    height: 443px;
+    height: 472px;
     min-width: 74.7%;
 }
 
@@ -634,7 +635,7 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 
 .drawer-handle {
     flex: 1;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
     background-color: rgb(14, 20, 24);
     color: var(--font-color);
@@ -647,7 +648,7 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
     background-color: rgb(14, 20, 24);
     margin-top: -3px;
     width: 100%;
-    height: 443px;
+    height: 472px;
 
 }
 .status-container {
@@ -694,14 +695,19 @@ th, td { border-bottom: 0.1px solid var(--font-color);padding: 5px ;}
 .details-content {
     display: flex;
     margin-bottom: 10px;
+    width: 95%;
 }
 .details-content p {
     font-weight: bold;
+    flex: 1;
 }
 
+
+
 .details {
-    padding-right: 25px;
-    padding-left: 5px;
+    flex: 1;
+    /* padding-right: 25px; */
+    /* padding-left: 5px; */
     font-weight: normal;
 }
 
@@ -732,7 +738,8 @@ label{
 #work-date,
 #resource-list,
 #activity-type,
-#working-hours {
+#working-hours,
+#resource-list-detailstab {
     margin: 10px;
     padding: 5px;
     background-color: #9bb9ca;
@@ -740,16 +747,25 @@ label{
     border: none;
 }
 
+.resource-optn-label {
+    margin: 0px;
+    padding: 0px;
+}
+
 option { 
     color: black;
     background-color: #9bb9ca;
 }
 
-.status-submit-btn {
+.status-submit-btn,
+.hours-btn {
     padding: 5px;
     border-radius: 3px;
     border: none;
     background-color: #9bb9ca;
+}
+
+.status-submit-btn {
     margin: 20px;
 }
 
@@ -758,7 +774,7 @@ option {
 .................................................*/
 
 .footer {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     z-index: 1;
     background-color: var(--primary-color);
@@ -769,3 +785,4 @@ option {
 
 .footer__content {color: var(--font-color);
 font-size: 12px;}
+
