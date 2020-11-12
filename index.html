@@ -290,13 +290,10 @@
                                 <div style="display: flex;">
                                     <form>
                                         <label class="resource-optn-label" for="resource-list-detailstab">Resource Name:</label>
-                                        <select id="resource-list-detailstab" name="resourceList">
+                                        <select id="resource-list-detailstab" name="resourceList" onchange="onResSelect(this.value)">
                                              <!--resource options-->
                                         </select>
                                     </form>
-                                    <div style="align-self: center;">
-                                        <input type="submit" value ="Show Hours" class="hours-btn">
-                                    </div>
                                 </div>
                                
                                 <div>Total Hours:<span class="resource-hours"></span></div>

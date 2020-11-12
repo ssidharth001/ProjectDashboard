@@ -3,6 +3,7 @@ let projects;
 let resources;
 let statusDetails;
 let selectedProjectId;
+let resourceWorkHours = {};
 
 // Fetches all dashboard data.
 const fetchDashboardData = () => {
@@ -409,7 +410,7 @@ document.querySelector(".project-list__body").addEventListener('click', _ => {
 function totalHours() {
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
     const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
-    const resourceWorkHours = {};
+    resourceWorkHours = {};
     const projectNameDetails = statusDetails.filter(e => e.projectName == CurrentProjectName)
     let resourceNamesList = [...new Set( projectNameDetails.map(e => e.resourceName))];
     resourceNamesList.forEach(e => {
@@ -417,25 +418,22 @@ function totalHours() {
     })
 
     const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
-    detailsResourceOptions.innerHTML = `<option>None</option>`;
+    detailsResourceOptions.innerHTML = `<option value="None">None</option>`;
     for(const list in resourceWorkHours) {
         detailsResourceOptions.innerHTML += `<option>${list}</option>`
     }
     
     document.querySelector(".total-work-hours").innerHTML = Object.values(resourceWorkHours).reduce((a,v) => (a+v),0 );
-    document.querySelector(".hours-btn").addEventListener("click", () => {
-        const resourceOptions = document.querySelector("#resource-list-detailstab");
-        const selectedOptn = resourceOptions.options[resourceOptions.selectedIndex].value;
-        if(selectedOptn != "None") {
-            document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOptn];
-        }
-        else {
-            document.querySelector(".resource-hours").innerHTML = `---`;
-        }
-
-
-    })
    
+}
+
+function onResSelect(selectedOption){
+    if(selectedOption != "None") {
+        document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOption];
+    }
+    else {
+        document.querySelector(".resource-hours").innerHTML = `---`;
+    }
 }
 
 // resource options in status tab 
