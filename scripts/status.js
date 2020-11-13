@@ -2,7 +2,7 @@
 
 const today = new Date();
 const dateToday = Number(String(today.getDate()).padStart(2, '0'))
-let ddlimit = Number(String(today.getDate()).padStart(2, '0')) - 7;
+let ddlimit = Number(String(today.getDate()).padStart(2, '0')) - 6;
 let mm = Number(String(today.getMonth() + 1).padStart(2, '0')); //January is 0
 let yyyy = Number(today.getFullYear());
 let dateList = []
@@ -41,18 +41,22 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
     const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
     const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
-    let selectedResourceExist = false
+    let selectedResourceExist = false;
+    let selectedActivityExist = false
     
     if(currentDateDetails[selectedDateOptn]){
         for(const details of currentDateDetails[selectedDateOptn]){
-            if(details.resourceName == selectedResourceOptn){selectedResourceExist = true}
+            if(details.resourceName == selectedResourceOptn && details.activityType == selectedActivityOptn){
+                selectedResourceExist = true;
+                selectedActivityExist = true;
+            }
         }
     }
 
     if(selectedResourceOptn === 'None'){
         document.querySelector('.no-selection-error').innerHTML = 
         `<p style="color: rgb(228, 49, 49);font-size: 12px;">Select resource</p>`
-    } else if(selectedResourceExist == true){
+    } else if(selectedResourceExist == true && selectedActivityExist == true){
         document.querySelector('.no-selection-error').innerHTML = 
         `<p style="color: rgb(228, 49, 49);font-size: 12px;">Status already exist for resource</p>`
     } else {
@@ -65,7 +69,7 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn
         }
         allStatusDetails.push(dailyStatusDetail)
-        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        //put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
         loadingHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
