@@ -51,7 +51,13 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
                 selectedActivityExist = true;
             }
         }
+        var maxWorkHours = currentDateDetails[selectedDateOptn].filter(e=>e.resourceName == selectedResourceOptn).reduce((a,v) => (a+Number(v.workHours)),0);
+        maxWorkHours += Number(selectedHourOptn);
+        console.log(maxWorkHours);
     }
+    
+   
+   
 
     if(selectedResourceOptn === 'None'){
         document.querySelector('.no-selection-error').innerHTML = 
@@ -59,7 +65,11 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     } else if(selectedResourceExist == true && selectedActivityExist == true){
         document.querySelector('.no-selection-error').innerHTML = 
         `<p style="color: rgb(228, 49, 49);font-size: 12px;">Status already exist for resource</p>`
-    } else {
+    } else if((maxWorkHours) && (maxWorkHours>14)) {
+        document.querySelector('.no-selection-error').innerHTML = 
+        `<p style="color: rgb(228, 49, 49);font-size: 12px;">Work hours exceed maximum limit</p>`
+    }
+    else {
         document.querySelector('.no-selection-error').innerHTML = ""
         let dailyStatusDetail = {
             projectName: getCurrentProject,
@@ -68,8 +78,9 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             activityType: selectedActivityOptn,
             workHours: selectedHourOptn
         }
-        allStatusDetails.push(dailyStatusDetail)
-        //put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        allStatusDetails.push(dailyStatusDetail);
+        
+        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
         loadingHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
