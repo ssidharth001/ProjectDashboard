@@ -765,6 +765,7 @@ option {
 
 .status-submit-btn {
     padding: 10px;
+    font-weight: bold;
     border-radius: 3px;
     border: none;
     background-color: #9bb9ca;
