@@ -18,7 +18,7 @@ for(const list of dateList.reverse()){
     statusDateOptions.innerHTML += `<option>${list}</option>`
 }
 
-const activityTypeList = ['Coding', 'Management', 'Training']
+const activityTypeList = ['Coding', 'Management', 'Training', 'Marketing', 'System Design', 'Testing' ,'Other'], 
 const workingHoursList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 const statusActivityOptions = document.querySelector('#activity-type')

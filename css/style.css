@@ -763,9 +763,8 @@ option {
     background-color: #9bb9ca;
 }
 
-.status-submit-btn,
-.hours-btn {
-    padding: 5px;
+.status-submit-btn {
+    padding: 10px;
     border-radius: 3px;
     border: none;
     background-color: #9bb9ca;
