@@ -1,0 +1,17 @@
+CREATE DATABASE Project_management_dashboard;
+USE Project_management_dashboard;
+
+#--- Table Creation -----------------------------------------#
+CREATE TABLE Projects (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(100), client VARCHAR(100), manager VARCHAR(50), status VARCHAR(7), start_date DATE,
+end_date DATE, progress INT, description VARCHAR(500), PRIMARY KEY (id));
+CREATE TABLE Resources (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40), email VARCHAR(50), role VARCHAR(20), PRIMARY KEY(id));
+CREATE TABLE Technologies (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(20), PRIMARY KEY(id));
+CREATE TABLE Status_reports (id INT NOT NULL AUTO_INCREMENT, project_id INT, resource_id INT, hours INT, date DATE, activity_type VARCHAR(30),
+PRIMARY KEY(id), FOREIGN KEY(project_id) REFERENCES Projects(id), FOREIGN KEY(resource_id) REFERENCES Resources(id));
+
+CREATE TABLE Project_tech_map (id INT NOT NULL AUTO_INCREMENT, project_id INT, tech_id INT,
+PRIMARY KEY(id), FOREIGN KEY(project_id) REFERENCES Projects(id), FOREIGN KEY(tech_id) REFERENCES Technologies(id) );
+CREATE TABLE Project_resource_map (id INT NOT NULL AUTO_INCREMENT, project_id INT, resource_id INT, billable BOOL, rate_per_hour INT,
+PRIMARY KEY(id), FOREIGN KEY(project_id) REFERENCES Projects(id), FOREIGN KEY(resource_id) REFERENCES Resources(id) );
+
+SELECT * FROM Project_resource_map

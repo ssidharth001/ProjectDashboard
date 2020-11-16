@@ -29,15 +29,22 @@ function printResult(res) {
 }
 
 function storeProjectData(res) {
-    projects = res;
+    projectDetails = res;
+   
+}
+
+function storeTechData(res) {
+    technologyNames = JSON.parse(res[0].technologies);
 }
 
 function storeResourceData(res) {
     resources = res;
+    
 }
 
 function storeStatusData(res){
-    statusDetails = res
+    statusDetails = res;
+  
 }
 
 let put = function (url, secretKey, obj, callback) {

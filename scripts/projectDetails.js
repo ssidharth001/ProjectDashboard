@@ -1,4 +1,6 @@
 // Global variables to store data commonly accessed by multiple functions.
+let projectDetails;
+let technologyNames;
 let projects;
 let resources;
 let statusDetails;
@@ -7,8 +9,14 @@ let resourceWorkHours = {};
 
 // Fetches all dashboard data.
 const fetchDashboardData = () => {
-    get(urlList.projects, secretKey, storeProjectData);
+    // get(urlList.projects, secretKey, storeProjectData);
+    getApi("http://localhost:8080/projects", storeProjectData);
+    getApi("http://localhost:8080/technologies", storeTechData);
+    projects= {projectList: projectDetails, technologies: technologyNames};
+
     get(urlList.resources, secretKey, storeResourceData);
+    // getApi("http://localhost:8080/resources", storeResourceData);
+    // console.log(resources);
     get(urlList.statuses, statusSecretKey, storeStatusData)
 
     selectedProjectId = projects.projectList.length - 1;
@@ -131,7 +139,7 @@ function loadDetails() {
     // Technologies tag list
     const tagList = document.querySelector('#tag-list');
     removeChildNodes(tagList);
-    selectedProject.technologies.forEach(technology => {
+    JSON.parse(selectedProject.technologies).forEach(technology => {
         const technologyTag = createSpanTag(technology);
         technologyTag.classList.add('tags');
         tagList.appendChild(technologyTag);
@@ -449,7 +457,6 @@ function statusResOptn() {
     if(resources[getCurrentProjectId] != undefined) {
         
     for(const list of resources[getCurrentProjectId]){
-        console.log(list);
         statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
         
     }
