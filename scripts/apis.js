@@ -32,7 +32,7 @@ let putApi = function (url,obj, callback) {
 
     req.onreadystatechange = () => {
         if (req.readyState == XMLHttpRequest.DONE) {
-            callback(JSON.parse(req.responseText));
+            callback(req.responseText);
         }
     };
 

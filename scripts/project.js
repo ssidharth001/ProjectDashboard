@@ -44,10 +44,10 @@ function addOrUpdateProject(e) {
             selectedProjectId = projects.projectList.length - 1;
             console.log(projects)
         } else {
-            // Update already existing project.
-            putApi("http://localhost:8080/projects/:id", otherProjectDetails, printResult)
+            // Update already existing project
             selectedProjectId = Number(selectedProjectId);
-            projects.projectList[selectedProjectId] = projectDetails;
+            putApi("http://localhost:8080/projects/"+ `${selectedProjectId}`, otherProjectDetails, printResult)
+            projects.projectList[selectedProjectId-1] = projectDetails;
         }
 
         // Function call to update changes to remote storage bin.
