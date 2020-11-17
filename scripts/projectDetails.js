@@ -12,14 +12,14 @@ const fetchDashboardData = () => {
     // get(urlList.projects, secretKey, storeProjectData);
     getApi("http://localhost:8080/projects", storeProjectData);
     getApi("http://localhost:8080/technologies", storeTechData);
-    projects= {projectList: projectDetails, technologies: technologyNames};
+    projects = { projectList: projectDetails, technologies: technologyNames };
 
-    get(urlList.resources, secretKey, storeResourceData);
-    // getApi("http://localhost:8080/resources", storeResourceData);
-    // console.log(resources);
+    // get(urlList.resources, secretKey, storeResourceData);
+    getApi("http://localhost:8080/resources", storeResourceData);
+    console.log(resources);
     get(urlList.statuses, statusSecretKey, storeStatusData)
 
-    selectedProjectId = projects.projectList.length - 1;
+    selectedProjectId = projects.projectList.length;
     loadProjectList();
 }
 
@@ -41,15 +41,15 @@ function loadProjectList() {
             projectCard.addEventListener('click', function (e) {
                 document.querySelector(".resource-hours").innerHTML = "";
                 const newSelectedProjectId = e.currentTarget.dataset.projectid;
-                document.querySelector("#footer").style.position="unset";
+                document.querySelector("#footer").style.position = "unset";
                 drawerToggler()
                 document.querySelector('.status-history-drawer').style.display = "none";
                 document.querySelector('.no-selection-error').innerHTML = "";
                 selectProject(newSelectedProjectId);
                 statusResOptn();
                 loadingHistory();
-                
-                
+
+
             });
         });
     }
@@ -107,8 +107,9 @@ function selectProject(newSelectedProjectId) {
 function loadDetails() {
     totalHours();
     statusResOptn();
-    const selectedProject = projects.projectList[selectedProjectId];
-
+    const selectedProject = projects.projectList[selectedProjectId - 1];
+    console.log(selectedProjectId)
+    console.log(selectedProject)
     // Section One - Project name, client name, project manager, project status
     const sectionOne = document.querySelector('#section1');
     removeChildNodes(sectionOne);
@@ -155,9 +156,11 @@ function loadResources() {
     const resourceTableBody = document.querySelector('#resource-table--body');
     removeChildNodes(resourceTableBody);
 
-    let resourceList = resources[selectedProjectId];
-    if (resourceList) {
-        resourceList.forEach((element, index) => {
+    // let resourceList = resources[selectedProjectId];
+    const allResourceList = resources.filter((element) => element.project_id == selectedProjectId )
+    if (allResourceList) {
+        allResourceList.forEach((e, index) => {
+            let {project_id, id, ...element} = e
             const tableRow = document.createElement('tr');
             for (const key in element) {
                 let cell;
@@ -268,7 +271,7 @@ invoiceGenerateButton.addEventListener('click', generateInvoice);
 const detailsTab = document.getElementById("project-headings--details"),
     resourceTab = document.getElementById("project-headings--resources"),
     invoiceTab = document.getElementById("project-headings--invoice"),
-    statusTab =  document.getElementById("project-headings--dailystatus"),
+    statusTab = document.getElementById("project-headings--dailystatus"),
     resourceBody = document.getElementById("resource"),
     invoiceBody = document.getElementById("invoice"),
     statusBody = document.getElementById("status"),
@@ -278,10 +281,10 @@ const detailsTab = document.getElementById("project-headings--details"),
 function calculateHeight(tab, limit, height) {
     if (limit == "minimum") tab.style.minHeight = `${height}px`
     else tab.style.maxHeight = `${height}px`
-}    
-    
+}
+
 // Set height of each tab
-function setHeight (){
+function setHeight() {
     const tabHeight = document.getElementById("project-details-tab").clientHeight,
         resourceBody = document.getElementById("resource"),
         invoiceBody = document.getElementById("invoice"),
@@ -295,7 +298,7 @@ function setHeight (){
 // Highlight tab on select
 function setVisibility(id, propertyValue) {
 
-    headingId = ["project-details-tab", "resource", "invoice","status"];
+    headingId = ["project-details-tab", "resource", "invoice", "status"];
     const detailsTab = document.getElementById("project-headings--details"),
         resourceTab = document.getElementById("project-headings--resources"),
         invoiceTab = document.getElementById("project-headings--invoice"),
@@ -310,7 +313,7 @@ function setVisibility(id, propertyValue) {
 
         // Toggle color for each tab (Details, Resources and Invoice)
         if (currentTab.id.toLowerCase().includes("detail")) { detailsTab.style.borderBottom = "none" }
-        if (currentTab.id.toLowerCase().includes("resource")) { resourceTab.style.borderBottom = "none"}
+        if (currentTab.id.toLowerCase().includes("resource")) { resourceTab.style.borderBottom = "none" }
         if (currentTab.id.toLowerCase().includes("invoice")) { invoiceTab.style.borderBottom = "none" }
         if (currentTab.id.toLowerCase().includes("status")) { statusTab.style.borderBottom = "none" }
 
@@ -330,7 +333,7 @@ function displayDetailsTab() {
 }
 
 detailsTab.addEventListener('click', _ => {
-    document.querySelector("#footer").style.position="unset";
+    document.querySelector("#footer").style.position = "unset";
     document.querySelector('.no-selection-error').innerHTML = "";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
@@ -341,7 +344,7 @@ detailsTab.addEventListener('click', _ => {
 
 resourceTab.addEventListener('click', _ => {
     document.querySelector('.no-selection-error').innerHTML = "";
-    document.querySelector("#footer").style.position="unset";
+    document.querySelector("#footer").style.position = "unset";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     resourceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
@@ -351,7 +354,7 @@ resourceTab.addEventListener('click', _ => {
 
 invoiceTab.addEventListener('click', _ => {
     document.querySelector('.no-selection-error').innerHTML = "";
-    document.querySelector("#footer").style.position="unset";
+    document.querySelector("#footer").style.position = "unset";
     drawerToggler()
     document.querySelector('.status-history-drawer').style.display = "none";
     invoiceTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
@@ -360,7 +363,7 @@ invoiceTab.addEventListener('click', _ => {
 })
 
 statusTab.addEventListener('click', _ => {
-    document.querySelector("#footer").style.position="fixed";
+    document.querySelector("#footer").style.position = "fixed";
     statusTab.style.borderBottom = "4px solid rgb(155, 185, 202)";
     document.getElementById("project-headings--edit").style.display = "none";
     setVisibility("status", "flex");
@@ -379,9 +382,9 @@ navSlide()
 
 // Detect device oritentation to adjust contents accordingly
 window.onorientationchange = function () { setHeight() }
-window.onload = function () {setHeight()}
-window.onresize = function () { 
-    setHeight(); 
+window.onload = function () { setHeight() }
+window.onresize = function () {
+    setHeight();
     if (window.outerWidth > 630) document.querySelector(".project-list__body").style.display = "block"
     else collapseContent()
 }
@@ -399,7 +402,7 @@ expandOrCollapse.addEventListener('click', _ => {
     if (window.outerWidth < 630) {
         // List in expanded state
         if (document.querySelector(".project-list__body").style.display == "block") {
-            collapseContent()        
+            collapseContent()
         }
         else {
             document.querySelector(".project-list__body").style.display = "block"
@@ -410,33 +413,33 @@ expandOrCollapse.addEventListener('click', _ => {
 })
 
 document.querySelector(".project-list__body").addEventListener('click', _ => {
-    if(window.outerWidth < 630) collapseContent()
+    if (window.outerWidth < 630) collapseContent()
 })
 
 // display total hours in details tab 
 
 function totalHours() {
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
-    const CurrentProjectName = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
+    const CurrentProjectName = projects.projectList.filter((project) => project.projectId == getCurrentProjectId)[0].projectName
     resourceWorkHours = {};
     const projectNameDetails = statusDetails.filter(e => e.projectName == CurrentProjectName)
-    let resourceNamesList = [...new Set( projectNameDetails.map(e => e.resourceName))];
+    let resourceNamesList = [...new Set(projectNameDetails.map(e => e.resourceName))];
     resourceNamesList.forEach(e => {
-        projectNameDetails.reduce((a,r) => (e == r.resourceName? resourceWorkHours[e] = Number(r.workHours) + a: a ),0);
+        projectNameDetails.reduce((a, r) => (e == r.resourceName ? resourceWorkHours[e] = Number(r.workHours) + a : a), 0);
     })
 
     const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
     detailsResourceOptions.innerHTML = `<option value="None">None</option>`;
-    for(const list in resourceWorkHours) {
+    for (const list in resourceWorkHours) {
         detailsResourceOptions.innerHTML += `<option>${list}</option>`
     }
-    
-    document.querySelector(".total-work-hours").innerHTML = Object.values(resourceWorkHours).reduce((a,v) => (a+v),0 );
-   
+
+    document.querySelector(".total-work-hours").innerHTML = Object.values(resourceWorkHours).reduce((a, v) => (a + v), 0);
+
 }
 
-function onResSelect(selectedOption){
-    if(selectedOption != "None") {
+function onResSelect(selectedOption) {
+    if (selectedOption != "None") {
         document.querySelector(".resource-hours").innerHTML = resourceWorkHours[selectedOption];
     }
     else {
@@ -452,13 +455,14 @@ function statusResOptn() {
     const statusResourceOptions = document.querySelector('#resource-list');
     statusResourceOptions.innerHTML = `<option>None</option>`;
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
-    
-   
-    if(resources[getCurrentProjectId] != undefined) {
-        
-    for(const list of resources[getCurrentProjectId]){
-        statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
-        
-    }
+    console.log('curre', getCurrentProjectId)
+    const allResourceList = resources.filter((element) => element.project_id == getCurrentProjectId )
+    console.log(allResourceList)
+    if (allResourceList != undefined) {
+
+        for (const list of allResourceList) {
+            statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
+
+        }
     }
 } 

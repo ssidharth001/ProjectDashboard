@@ -138,18 +138,18 @@ updateProject.addEventListener('click', function (e) {
     clientName.readOnly = true;
 
     // Identify currently active project and populate update form fields with existing values.
-    selectedProject = projects.projectList[selectedProjectId];
+    selectedProject = projects.projectList[selectedProjectId - 1];
     projectName.value = selectedProject.projectName;
     clientName.value = selectedProject.clientName;
     projectManager.value = selectedProject.projectManager;
     startDate.value = selectedProject.startDate;
     endDate.value = selectedProject.endDate;
-    technologies.value = selectedProject.technologies.join(',');
+    technologies.value = JSON.parse(selectedProject.technologies).join(',');
     progress.value = selectedProject.progress;
     progressLabel.innerText = selectedProject.progress;
     description.value = selectedProject.description;
 
-    tagify.addTags(selectedProject.technologies);
+    tagify.addTags(JSON.parse(selectedProject.technologies));
 })
 
 function clearProjectErrorMessages () {
