@@ -16,7 +16,6 @@ const fetchDashboardData = () => {
 
     // get(urlList.resources, secretKey, storeResourceData);
     getApi("http://localhost:8080/resources", storeResourceData);
-    console.log(resources);
     get(urlList.statuses, statusSecretKey, storeStatusData)
 
     selectedProjectId = projects.projectList.length;
@@ -108,8 +107,6 @@ function loadDetails() {
     totalHours();
     statusResOptn();
     const selectedProject = projects.projectList[selectedProjectId - 1];
-    console.log(selectedProjectId)
-    console.log(selectedProject)
     // Section One - Project name, client name, project manager, project status
     const sectionOne = document.querySelector('#section1');
     removeChildNodes(sectionOne);
@@ -140,11 +137,21 @@ function loadDetails() {
     // Technologies tag list
     const tagList = document.querySelector('#tag-list');
     removeChildNodes(tagList);
-    JSON.parse(selectedProject.technologies).forEach(technology => {
-        const technologyTag = createSpanTag(technology);
-        technologyTag.classList.add('tags');
-        tagList.appendChild(technologyTag);
-    });
+    try {
+        JSON.parse(selectedProject.technologies).forEach(technology => {
+            const technologyTag = createSpanTag(technology);
+            technologyTag.classList.add('tags');
+            tagList.appendChild(technologyTag);
+        });
+      }
+    catch(err) {
+        selectedProject.technologies.forEach(technology => {
+            const technologyTag = createSpanTag(technology);
+            technologyTag.classList.add('tags');
+            tagList.appendChild(technologyTag);
+        });
+    }
+    
 
     // Project Description
     const description = document.querySelector('#project-description');
@@ -455,9 +462,7 @@ function statusResOptn() {
     const statusResourceOptions = document.querySelector('#resource-list');
     statusResourceOptions.innerHTML = `<option>None</option>`;
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid;
-    console.log('curre', getCurrentProjectId)
     const allResourceList = resources.filter((element) => element.project_id == getCurrentProjectId )
-    console.log(allResourceList)
     if (allResourceList != undefined) {
 
         for (const list of allResourceList) {

@@ -53,7 +53,6 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
         }
         var maxWorkHours = currentDateDetails[selectedDateOptn].filter(e=>e.resourceName == selectedResourceOptn).reduce((a,v) => (a+Number(v.workHours)),0);
         maxWorkHours += Number(selectedHourOptn);
-        console.log(maxWorkHours);
     }
     
    
@@ -98,9 +97,7 @@ function loadingHistory() {
     const CurrentProjectId = document.querySelector('.selection').dataset.projectid
     const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
     const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
-    console.log(currentProjStatus);
     if(currentProjStatus.length !== 0) {
-        console.log("inside if");
         const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
         const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
         currentDateDetails = {}
@@ -136,7 +133,6 @@ function loadingHistory() {
         }
     }
     else {
-        console.log("hello");
         document.querySelector(".status-container").innerHTML = `<p class="no-status">No status history available</p>`
     }
    

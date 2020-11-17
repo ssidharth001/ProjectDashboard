@@ -17,9 +17,8 @@ function addOrUpdateProject(e) {
     if (projectNameStatus && clientNameStatus && projectManagerStatus && descriptionStatus && dateStatus) {
         projectFormModal.style.display = "none";
         formsContainer.style.display = "none";
-
         const projectDetails = {
-            projectId: addProjectFunctionality ? projects.projectList.length : Number(selectedProjectId),
+            projectId: addProjectFunctionality ? projects.projectList.length + 1 : Number(selectedProjectId),
             projectName: projectName.value,
             clientName: clientName.value,
             projectManager: projectManager.value,
@@ -32,22 +31,29 @@ function addOrUpdateProject(e) {
             technologies: technologies.value ? JSON.parse(technologies.value).map(tech => tech.value) : []
         }
 
+        const { projectId, ...otherProjectDetails } = projectDetails
+
         // If a new user-entered tag is not there in technologies array, add it to the array.
         projectDetails.technologies.forEach(tech => {
             if (!projects.technologies.includes(tech)) { projects.technologies.push(tech); }
         });
         if (addProjectFunctionality) {
             // Add new project.
+            postApi("http://localhost:8080/projects", otherProjectDetails, printResult)
             projects.projectList.push(projectDetails);
             selectedProjectId = projects.projectList.length - 1;
+            console.log(projects)
         } else {
             // Update already existing project.
+            putApi("http://localhost:8080/projects/:id", otherProjectDetails, printResult)
             selectedProjectId = Number(selectedProjectId);
             projects.projectList[selectedProjectId] = projectDetails;
         }
 
         // Function call to update changes to remote storage bin.
-        put(urlList.projects, secretKey, projects, printResult);
+
+        
+        // put(urlList.projects, secretKey, projects, printResult);
         tagify.removeAllTags();
         addProjectFunctionality = true;
         loadProjectList();
