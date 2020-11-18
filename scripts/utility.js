@@ -29,6 +29,10 @@ function printResult(res) {
     console.log(JSON.parse(resObj).insertId);
 }
 
+function printDeletedResult(res) {
+    console.log(res);
+}
+
 function storeProjectData(res) {
     projectDetails = res;
    

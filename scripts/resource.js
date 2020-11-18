@@ -3,37 +3,40 @@ let addResourceFunctionality = true;
 
 console.log("selected", selectedProjectId)
 // Create resource 
-const createResourceObject = (name, role, email, billable, rate) => {
+const createResourceObject = (name, role, email, billable, rate, billableStatus) => {
     const resourceDetails = {
         project_id:selectedProjectId,
         name: name,
         role: role,
         email: email,
-        billable: billable.checked,
-        ratePerHour: billable.checked ? Number(rate) : Number(0)
+        billable: billable,
+        ratePerHour: billableStatus.checked ? Number(rate) : Number(0)
     }
     return resourceDetails
 }
 
 // Function to add or update resource.
-// function addOrUpdateObject (resourceDetails) {
-//     // if (!resources[selectedProjectId]) {
-//     //     resources[selectedProjectId] = [];
-//     // }
-//     if (addResourceFunctionality) {
-//         // Add new resource.
-//         // resources[selectedProjectId].push(resourceDetails);
-//         resources.push(resourceDetails);
-//     } else {
-//         // Update already existing resource.
-//         resources[selectedProjectId][selectedResource] = resourceDetails;
-//     }
-// } 
+function addOrUpdateObject (resourceDetails) {
+    // if (!resources[selectedProjectId]) {
+    //     resources[selectedProjectId] = [];
+    // }
+    if (addResourceFunctionality) {
+        // Add new resource.
+        postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult)
+        // resources[selectedProjectId].push(resourceDetails);
+        // resources.push(resourceDetails);
+    } else {
+        console.log("in else");
+        // Update already existing resource.
+        putApi("http://localhost:8080/resources/"+ `${selectedResource}`, resourceDetails, printDeletedResult)
+        // resources[selectedProjectId][selectedResource] = resourceDetails;
+    }
+} 
 
 // Function call to update changes to remote storage bin.
 function sendFormData (resourceDetails) {
     console.log(resourceDetails)
-    postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult)
+   
     // put(urlList.resources, secretKey, resources, printResult);
     loadResources();
     resourceFormModal.style.display = "none";
@@ -46,24 +49,25 @@ function addOrUpdateResource(e) {
     const nameStatus = resourceName.value.length != 0 && RegExp.prototype.isAlpha(resourceName.value) ? true : false,
     emailStatus = email.value.length > 0 && emailPatternCheck(email.value) ? true : false
     roleStatus = role.value.length != 0 && RegExp.prototype.isAlpha(role.value) ? true : false,
-    rateStatus = rate.value != "" && billableStatus.checked ? true : false
+    rateStatus = rate.value != "" && billableStatus.checked ? true : false;
+    var billables;
     let resourceDetails;
 
     if (nameStatus && emailStatus && roleStatus) {
         if (billableStatus.checked) { // Billable true
-            console.log(rateStatus, rate)
             if (rateStatus) {
-                resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billableStatus, rate.value)
-                console.log(resourceDetails)
-                // addOrUpdateObject(resourceDetails)
+                billables = 1;
+                resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billables, rate.value,billableStatus)
+                addOrUpdateObject(resourceDetails)
                 sendFormData(resourceDetails)
             }
             // Rate field empty error
             else {errorMessages(rate, "#rate-error", "Enter a valid amount")}
         } // billable false
         else { 
-            resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billableStatus, 0)
-            // addOrUpdateObject(resourceDetails)
+            billables =0;
+            resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billables, 0, billableStatus)
+            addOrUpdateObject(resourceDetails)
             sendFormData(resourceDetails);
         }
     
@@ -128,8 +132,9 @@ function displayEditResourceForm(e) {
 
     clearErrorMessages();
 
-    resourceList = resources[selectedProjectId];
-    const resource = resourceList[selectedResource];
+    resourceList = resources.filter(e => e.project_id == selectedProjectId);
+    console.log(resourceList);
+    const resource = resourceList.find(e => e.id == selectedResource);
     console.log(resource)
     resourceName.value = resource.name;
     email.value = resource.email;
@@ -192,13 +197,14 @@ cancelDeleteResource.onclick = () => formsContainer.style.display = "none";
 const deleteResourceButton = document.querySelector('#delete-resource');
 deleteResourceButton.addEventListener('click', function (e) {
     e.preventDefault()
-    resources[selectedProjectId].splice(selectedResource, 1);
+    // resources[selectedProjectId].splice(selectedResource, 1);
     
     resourceFormModal.style.display = "none";
     formsContainer.style.display = "none";
-
+    console.log(selectedResource);
     // Function call to update changes to remote storage bin.
-    put(urlList.resources, secretKey, resources, printResult);
+    // put(urlList.resources, secretKey, resources, printResult);
+    deleteApi("http://localhost:8080/resources/" + `${selectedResource}`, {"project_id": selectedProjectId}, printDeletedResult);
     loadResources();
     resetInvoiceTab();
 });
