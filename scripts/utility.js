@@ -25,7 +25,8 @@ let get = function (url, secretKey, callback) {
 
 // Prints whatever is passed to it.
 function printResult(res) {
-    console.log(res);
+    let resObj = res
+    console.log(JSON.parse(resObj).insertId);
 }
 
 function storeProjectData(res) {

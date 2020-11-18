@@ -1,9 +1,11 @@
 // Globally accessible variable to store whether function should add a new resource or update an existing resource.
 let addResourceFunctionality = true;
 
+console.log("selected", selectedProjectId)
 // Create resource 
 const createResourceObject = (name, role, email, billable, rate) => {
     const resourceDetails = {
+        project_id:selectedProjectId,
         name: name,
         role: role,
         email: email,
@@ -14,22 +16,25 @@ const createResourceObject = (name, role, email, billable, rate) => {
 }
 
 // Function to add or update resource.
-function addOrUpdateObject (resourceDetails) {
-    if (!resources[selectedProjectId]) {
-        resources[selectedProjectId] = [];
-    }
-    if (addResourceFunctionality) {
-        // Add new resource.
-        resources[selectedProjectId].push(resourceDetails);
-    } else {
-        // Update already existing resource.
-        resources[selectedProjectId][selectedResource] = resourceDetails;
-    }
-} 
+// function addOrUpdateObject (resourceDetails) {
+//     // if (!resources[selectedProjectId]) {
+//     //     resources[selectedProjectId] = [];
+//     // }
+//     if (addResourceFunctionality) {
+//         // Add new resource.
+//         // resources[selectedProjectId].push(resourceDetails);
+//         resources.push(resourceDetails);
+//     } else {
+//         // Update already existing resource.
+//         resources[selectedProjectId][selectedResource] = resourceDetails;
+//     }
+// } 
 
 // Function call to update changes to remote storage bin.
-function sendFormData () {
-    put(urlList.resources, secretKey, resources, printResult);
+function sendFormData (resourceDetails) {
+    console.log(resourceDetails)
+    postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult)
+    // put(urlList.resources, secretKey, resources, printResult);
     loadResources();
     resourceFormModal.style.display = "none";
     formsContainer.style.display = "none";
@@ -50,16 +55,16 @@ function addOrUpdateResource(e) {
             if (rateStatus) {
                 resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billableStatus, rate.value)
                 console.log(resourceDetails)
-                addOrUpdateObject(resourceDetails)
-                sendFormData()
+                // addOrUpdateObject(resourceDetails)
+                sendFormData(resourceDetails)
             }
             // Rate field empty error
             else {errorMessages(rate, "#rate-error", "Enter a valid amount")}
         } // billable false
         else { 
             resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billableStatus, 0)
-            addOrUpdateObject(resourceDetails)
-            sendFormData();
+            // addOrUpdateObject(resourceDetails)
+            sendFormData(resourceDetails);
         }
     
         console.log("Data stored/updated")
