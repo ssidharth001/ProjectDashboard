@@ -25,8 +25,8 @@ let get = function (url, secretKey, callback) {
 
 // Prints whatever is passed to it.
 function printResult(res) {
-    let resObj = res
-    console.log(JSON.parse(resObj).insertId);
+    let resObj =res;
+    console.log(JSON.parse(res).insertId);
 }
 
 function printDeletedResult(res) {

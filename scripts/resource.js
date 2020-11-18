@@ -1,14 +1,14 @@
 // Globally accessible variable to store whether function should add a new resource or update an existing resource.
 let addResourceFunctionality = true;
 
-console.log("selected", selectedProjectId)
+
 // Create resource 
 const createResourceObject = (name, role, email, billable, rate, billableStatus) => {
     const resourceDetails = {
-        project_id:selectedProjectId,
         name: name,
         role: role,
         email: email,
+        project_id:selectedProjectId,
         billable: billable,
         ratePerHour: billableStatus.checked ? Number(rate) : Number(0)
     }
@@ -22,9 +22,10 @@ function addOrUpdateObject (resourceDetails) {
     // }
     if (addResourceFunctionality) {
         // Add new resource.
-        postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult)
-        // resources[selectedProjectId].push(resourceDetails);
-        // resources.push(resourceDetails);
+        postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult);
+        const gResourceDetails= {id:resObj,...resourceDetails}
+        resources.push(gResourceDetails);
+        console.log(resources);
     } else {
         console.log("in else");
         // Update already existing resource.
@@ -35,7 +36,6 @@ function addOrUpdateObject (resourceDetails) {
 
 // Function call to update changes to remote storage bin.
 function sendFormData (resourceDetails) {
-    console.log(resourceDetails)
    
     // put(urlList.resources, secretKey, resources, printResult);
     loadResources();

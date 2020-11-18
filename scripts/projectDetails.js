@@ -9,12 +9,10 @@ let resourceWorkHours = {};
 
 // Fetches all dashboard data.
 const fetchDashboardData = () => {
-    // get(urlList.projects, secretKey, storeProjectData);
+
     getApi("http://localhost:8080/projects", storeProjectData);
     getApi("http://localhost:8080/technologies", storeTechData);
     projects = { projectList: projectDetails, technologies: technologyNames };
-
-    // get(urlList.resources, secretKey, storeResourceData);
     getApi("http://localhost:8080/resources", storeResourceData);
     getApi("http://localhost:8080/status", storeStatusData)
 
