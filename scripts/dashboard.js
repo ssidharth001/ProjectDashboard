@@ -13,8 +13,13 @@ let resources;
 
 // Fetches all dashboard data.
 const fetchDashboardData = () => {
-    get(urlList.projects, secretKey, storeProjectData);
-    get(urlList.resources, secretKey, storeResourceData);
+    // get(urlList.projects, secretKey, storeProjectData);
+    // get(urlList.resources, secretKey, storeResourceData);
+    getApi("http://localhost:8080/projects", storeProjectData);
+    getApi("http://localhost:8080/technologies", storeTechData);
+    projects = { projectList: projectDetails, technologies: technologyNames };
+    getApi("http://localhost:8080/resources", storeResourceData);
+
     loadDashboardData();
 }
 
@@ -41,32 +46,38 @@ function totalProjects() {
 
 // Returns total number of distinct resources.
 function totalDistinctResources() {
-    let distinctResourcesList = [];
-    resources.forEach(resourceList => {
-        if (resourceList) {
-            const distinctResources = resourceList.reduce((acc, currVal) => {
-                !distinctResourcesList.includes(currVal.email) ? acc.push(currVal.email) : acc;
-                return acc;
-            }, []);
-            distinctResourcesList = [...distinctResourcesList, ...distinctResources];
-        }
-    });
+    // let distinctResourcesList = [];
+    // resources.forEach(resourceList => {
+    //     if (resourceList) {
+    //         const distinctResources = resourceList.reduce((acc, currVal) => {
+    //             !distinctResourcesList.includes(currVal.email) ? acc.push(currVal.email) : acc;
+    //             return acc;
+    //         }, []);
+    //         distinctResourcesList = [...distinctResourcesList, ...distinctResources];
+    //     }
+    // });
+    // return distinctResourcesList.length;
+
+    const distinctResourcesList = [...new Set( resources.map(item => item.id))];
     return distinctResourcesList.length;
 }
 
 // Returns total number of billables and shadows.
 function totalBillableAndShadowResources() {
-    let billableCount = 0;
-    let shadowCount = 0;
-    resources.forEach(resourceList => {
-        if (resourceList) {
-            resourceList.reduce((acc, currVal) => {
-                currVal.billable ? billableCount++ : shadowCount++;
-                return [billableCount, shadowCount];
-            }, []);
-        }
-    });
-    return [billableCount, shadowCount];
+    // let billableCount = 0;
+    // let shadowCount = 0;
+    // resources.forEach(resourceList => {
+    //     if (resourceList) {
+    //         resourceList.reduce((acc, currVal) => {
+    //             currVal.billable ? billableCount++ : shadowCount++;
+    //             return [billableCount, shadowCount];
+    //         }, []);
+    //     }
+    // });
+    // return [billableCount, shadowCount];
+    let billableCount = resources.filter(item => item.project_id!=null && item.billable == 1);
+    let shadowCount = resources.filter(item => item.project_id!=null && item.billable == 0);
+    return [billableCount.length, shadowCount.length];
 }
 
 // Loads projects per technology list.
@@ -124,7 +135,7 @@ function projectTechnologyChart() {
 function projectsPerTechnology() {
     const technologyCount = projects.technologies.reduce((acc, currVal) => (acc[currVal] = 0, acc), {});
     projects.projectList.forEach(project => {
-        project.technologies.forEach(tech => technologyCount[tech]++);
+        JSON.parse(project.technologies).forEach(tech => technologyCount[tech]++);
     });
     return technologyCount;
 }
@@ -144,11 +155,17 @@ function resourceProjectChart() {
 
 // Returns number of resources per project.
 function resourcesPerProject() {
-    const resourceCount = projects.projectList.reduce((acc, currVal) => (acc[currVal.projectId] = 0, acc), {});
-    resources.forEach((resourceList, index) => {
-        if (resourceList) {
-            resourceCount[index] = resourceList.length;
-        }
+    // const resourceCount = projects.projectList.reduce((acc, currVal) => (acc[currVal.projectId] = 0, acc), {});
+    // resources.forEach((resourceList, index) => {
+    //     if (resourceList) {
+    //         resourceCount[index] = resourceList.length;
+    //     }
+    // });
+    // return resourceCount;
+    let resourceCount={};
+    const count =  projects.projectList.forEach(p => {
+        resources.reduce((a,v) => (v.project_id == p.projectId ?resourceCount[v.project_id] = a+1 : a),0)
     });
     return resourceCount;
+  
 }

@@ -16,7 +16,7 @@ const fetchDashboardData = () => {
 
     // get(urlList.resources, secretKey, storeResourceData);
     getApi("http://localhost:8080/resources", storeResourceData);
-    get(urlList.statuses, statusSecretKey, storeStatusData)
+    getApi("http://localhost:8080/status", storeStatusData)
 
     selectedProjectId = projects.projectList.length;
     loadProjectList();
@@ -46,7 +46,7 @@ function loadProjectList() {
                 document.querySelector('.no-selection-error').innerHTML = "";
                 selectProject(newSelectedProjectId);
                 statusResOptn();
-                loadingHistory();
+                loadHistory();
 
 
             });
@@ -228,12 +228,12 @@ function generateInvoice() {
         const invoiceTable = document.querySelector('#invoice-table');
         removeChildNodes(invoiceTable);
 
-        let resourceList = resources[selectedProjectId];
+        let resourceList = resources.filter(e => e.project_id == selectedProjectId);
         let invoiceAmount = 0;
 
         if (resourceList) {
             resourceList.forEach(resource => {
-                if (resource.billable === true) {
+                if (resource.billable === 1) {
                     const tableRow = document.createElement('tr');
                     const resourceName = createTableCell(resource.name);
                     const ratePerHour = createTableCell(resource.ratePerHour);
@@ -427,12 +427,12 @@ document.querySelector(".project-list__body").addEventListener('click', _ => {
 
 function totalHours() {
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
-    const CurrentProjectName = projects.projectList.filter((project) => project.projectId == getCurrentProjectId)[0].projectName
+    // const CurrentProjectName = projects.projectList.filter((project) => project.projectId == getCurrentProjectId)[0].projectName
     resourceWorkHours = {};
-    const projectNameDetails = statusDetails.filter(e => e.projectName == CurrentProjectName)
-    let resourceNamesList = [...new Set(projectNameDetails.map(e => e.resourceName))];
+    const projectNameDetails = statusDetails.filter(e => e.project_id == getCurrentProjectId)
+    let resourceNamesList = [...new Set(projectNameDetails.map(e => e.name))];
     resourceNamesList.forEach(e => {
-        projectNameDetails.reduce((a, r) => (e == r.resourceName ? resourceWorkHours[e] = Number(r.workHours) + a : a), 0);
+        projectNameDetails.reduce((a, r) => (e == r.name ? resourceWorkHours[e] = Number(r.workHours) + a : a), 0);
     })
 
     const detailsResourceOptions = document.querySelector('#resource-list-detailstab');
@@ -466,7 +466,7 @@ function statusResOptn() {
     if (allResourceList != undefined) {
 
         for (const list of allResourceList) {
-            statusResourceOptions.innerHTML += `<option>${list.name}</option>`;
+            statusResourceOptions.innerHTML += `<option data-id=${list.id}>${list.name}</option>`;
 
         }
     }

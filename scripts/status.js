@@ -36,9 +36,10 @@ for(const list of workingHoursList){
 let allStatusDetails = statusDetails
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
-    const getCurrentProject = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
+    // const getCurrentProject = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
     const selectedDateOptn = statusDateOptions.options[statusDateOptions.selectedIndex].value;
     const selectedResourceOptn = statusResourceOptions.options[statusResourceOptions.selectedIndex].value;
+    const selectedResourceId = statusResourceOptions.options[statusResourceOptions.selectedIndex].dataset.id;
     const selectedActivityOptn = statusActivityOptions.options[statusActivityOptions.selectedIndex].value;
     const selectedHourOptn = statusHourOptions.options[statusHourOptions.selectedIndex].value;
     let selectedResourceExist = false;
@@ -71,16 +72,18 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     else {
         document.querySelector('.no-selection-error').innerHTML = ""
         let dailyStatusDetail = {
-            projectName: getCurrentProject,
+            project_id: getCurrentProjectId,
             date: selectedDateOptn,
-            resourceName: selectedResourceOptn,
+            resource_id: selectedResourceId ,
             activityType: selectedActivityOptn,
-            workHours: selectedHourOptn
+            workHours: selectedHourOptn,
+            name: selectedResourceOptn
         }
-        allStatusDetails.push(dailyStatusDetail);
-        
-        put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
-        loadingHistory();
+        // allStatusDetails.push(dailyStatusDetail);
+        console.log(dailyStatusDetail);
+        // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
+        postApi("http://localhost:8080/status", dailyStatusDetail, printDeletedResult)
+        // loadHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
         setTimeout(function(){
@@ -92,11 +95,11 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
 
 //---------- Loading status history dynamically----------------
 let currentDateDetails = {}
-function loadingHistory() {
+function loadHistory() {
     document.querySelector(".status-container").innerHTML = "";
     const CurrentProjectId = document.querySelector('.selection').dataset.projectid
-    const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
-    const currentProjStatus = statusDetails.filter(e => e.projectName == CurrentProject);
+    // const CurrentProject = projects.projectList.filter((project)=>project.projectId == CurrentProjectId)[0].projectName
+    const currentProjStatus = statusDetails.filter(e => e.project_id == CurrentProjectId);
     if(currentProjStatus.length !== 0) {
         const statusDates = [...new Set(currentProjStatus.map((e)=>e.date))]
         const sortedstatusDates = statusDates.sort((a,b) => a < b ? 1 : -1);
@@ -123,7 +126,7 @@ function loadingHistory() {
                 document.querySelectorAll('.details-section')[i].innerHTML += 
                 `<div class="details-content">
                     <span style="padding: 0px 10px;" id="serialnumber">${serialNumber}</span>
-                    <p>Name: <span class="details" id="name">${resources.resourceName}</span></p>
+                    <p>Name: <span class="details" id="name">${resources.name}</span></p>
                     <p>Activity:  <span class="details" id="activity">${resources.activityType}</span></p>
                     Hours:  <span style = "padding-right:10px" id="hours">${resources.workHours}</span>
                 </div>` 
@@ -138,5 +141,5 @@ function loadingHistory() {
    
 }
 
-loadingHistory();
+loadHistory();
 
