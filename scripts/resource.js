@@ -23,14 +23,22 @@ function addOrUpdateObject (resourceDetails) {
     if (addResourceFunctionality) {
         // Add new resource.
         postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult);
-        const gResourceDetails= {id:resObj,...resourceDetails}
+        let resId = resources[resources.length-1].id+1;
+        const gResourceDetails= {id:resId,...resourceDetails}
         resources.push(gResourceDetails);
         console.log(resources);
+        
     } else {
         console.log("in else");
         // Update already existing resource.
         putApi("http://localhost:8080/resources/"+ `${selectedResource}`, resourceDetails, printDeletedResult)
         // resources[selectedProjectId][selectedResource] = resourceDetails;
+        resources = resources.filter(e => !(e.project_id == selectedProjectId && e.id == selectedResource));
+ 
+        const gResourceDetails= {id:Number(selectedResource),...resourceDetails}
+        resources.push(gResourceDetails);
+    
+        // console.log(resources);
     }
 } 
 

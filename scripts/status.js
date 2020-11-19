@@ -33,7 +33,7 @@ for(const list of workingHoursList){
 
 // status submit function and validation 
 
-let allStatusDetails = statusDetails
+// let allStatusDetails = statusDetails
 document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
     const getCurrentProjectId = document.querySelector('.selection').dataset.projectid
     // const getCurrentProject = projects.projectList.filter((project)=>project.projectId == getCurrentProjectId)[0].projectName
@@ -79,11 +79,13 @@ document.querySelector('.status-submit-btn').addEventListener('click', ()=>{
             workHours: selectedHourOptn,
             name: selectedResourceOptn
         }
-        // allStatusDetails.push(dailyStatusDetail);
+       
         console.log(dailyStatusDetail);
         // put(urlList.statuses, statusSecretKey, allStatusDetails, printResult);
-        postApi("http://localhost:8080/status", dailyStatusDetail, printDeletedResult)
-        // loadHistory();
+        postApi("http://localhost:8080/status", dailyStatusDetail, printDeletedResult);
+        let statusId = statusDetails[statusDetails.length-1].id+1;
+        statusDetails.push({id:statusId,...dailyStatusDetail});
+        loadHistory();
         document.querySelector('.no-selection-error').innerHTML =
         `<p style="color: lightgreen;font-size: 12px;">Status successfully added</p>`
         setTimeout(function(){
