@@ -1,6 +1,6 @@
 // Globally accessible variable to store whether function should add a new resource or update an existing resource.
 let addResourceFunctionality = true;
-
+let deletedResId = 0;
 
 // Create resource 
 const createResourceObject = (name, role, email, billable, rate, billableStatus) => {
@@ -23,7 +23,14 @@ function addOrUpdateObject (resourceDetails) {
     if (addResourceFunctionality) {
         // Add new resource.
         postApi("http://localhost:8080/resources/allocate", resourceDetails, printResult);
-        let resId = resources[resources.length-1].id+1;
+        let resId;
+        if(deletedResId != 0){
+            console.log('in delete',deletedResId)
+            resId = deletedResId + 1
+            deletedResId = 0
+        }else {
+            resId = resources[resources.length-1].id+1;
+        }
         const gResourceDetails= {id:resId,...resourceDetails}
         resources.push(gResourceDetails);
         console.log(resources);
@@ -73,7 +80,7 @@ function addOrUpdateResource(e) {
             else {errorMessages(rate, "#rate-error", "Enter a valid amount")}
         } // billable false
         else { 
-            billables =0;
+            billables = 0;
             resourceDetails = createResourceObject(resourceName.value, role.value, email.value, billables, 0, billableStatus)
             addOrUpdateObject(resourceDetails)
             sendFormData(resourceDetails);
@@ -202,6 +209,7 @@ function displayDeleteResourceModal(e) {
 const cancelDeleteResource = document.getElementById("cancel-delete-resource");
 cancelDeleteResource.onclick = () => formsContainer.style.display = "none";
 
+
 const deleteResourceButton = document.querySelector('#delete-resource');
 deleteResourceButton.addEventListener('click', function (e) {
     e.preventDefault()
@@ -213,6 +221,11 @@ deleteResourceButton.addEventListener('click', function (e) {
     // Function call to update changes to remote storage bin.
     // put(urlList.resources, secretKey, resources, printResult);
     deleteApi("http://localhost:8080/resources/" + `${selectedResource}`, {"project_id": selectedProjectId}, printDeletedResult);
+    if(resources[resources.length - 1].id == selectedResource){
+        deletedResId = selectedResource
+    }
+    resources = resources.filter(e => !(e.project_id == selectedProjectId && e.id == selectedResource));
+    console.log('in delete',deletedResId)
     loadResources();
     resetInvoiceTab();
 });
